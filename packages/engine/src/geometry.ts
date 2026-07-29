@@ -1,6 +1,7 @@
 import type { Point, Rectangle } from "../../schema/src/index.ts";
 
 const EPSILON = 1e-9;
+const persisted = (value: number): number => Number(value.toFixed(6));
 
 export function distance(a: Point, b: Point): number {
   return Math.hypot(b.x - a.x, b.y - a.y);
@@ -60,7 +61,10 @@ export function isInsideMap(point: Point, map: { width: number; height: number }
 
 /** Rejects a complete movement when its swept path crosses a blocking obstacle. */
 export function resolveMovement(start: Point, proposed: Point, map: { width: number; height: number; obstacles?: Rectangle[] }): Point {
-  const bounded = { x: Math.min(map.width, Math.max(0, proposed.x)), y: Math.min(map.height, Math.max(0, proposed.y)) };
+  const bounded = {
+    x: persisted(Math.min(map.width, Math.max(0, proposed.x))),
+    y: persisted(Math.min(map.height, Math.max(0, proposed.y))),
+  };
   const blocked = (map.obstacles ?? []).some(obstacle => obstacle.blocksMovement !== false && segmentIntersectsRectangle(start, bounded, obstacle));
   return blocked ? { ...start } : bounded;
 }

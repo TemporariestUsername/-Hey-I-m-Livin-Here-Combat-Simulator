@@ -4,6 +4,7 @@ import { checksum, GENESIS_CHECKSUM } from "./checksum.ts";
 import { distance, resolveMovement } from "./geometry.ts";
 import { namedStream } from "./prng.ts";
 import { buildObservations } from "./sensing.ts";
+import { buildTempoProfile, resolveInterrupts } from "./tempo.ts";
 
 export const ENGINE_VERSION = "0.1.0";
 
@@ -25,6 +26,7 @@ export function runSimulation(scenario: ScenarioSpec): RunLog {
   const events: SimulationEvent[] = [];
   append(events, 0, "simulation-started", { scenarioId: scenario.id, seed: scenario.seed });
   const policyRng = namedStream(scenario.seed, "policy");
+  const contactRng = namedStream(scenario.seed, "contact");
   while (!state.done) {
     state.tick += 1;
     state.elapsedMs = state.tick * scenario.pulseMs;
@@ -53,6 +55,15 @@ export function runSimulation(scenario: ScenarioSpec): RunLog {
       actor.intent = selected;
       actor.stamina = Math.max(0, Number((actor.stamina - (selected === "commit" ? 0.02 : 0.005)).toFixed(6)));
       append(events, state.tick, "intent-resolved", { actorId: actor.id, selected, stamina: actor.stamina });
+    }
+    const tempoProfiles = new Map(state.actors.map(actor => {
+      const profile = buildTempoProfile(actor, contactRng.nextFloat());
+      append(events, state.tick, "tempo-resolved", { ...profile });
+      return [actor.id, profile] as const;
+    }));
+    const visibleByActor = new Map(observations.map(observation => [observation.observerId, observation.visibleActorIds] as const));
+    for (const result of resolveInterrupts(state.actors, visibleByActor, tempoProfiles)) {
+      append(events, state.tick, "interrupt-resolved", { ...result });
     }
     const snapshot = new Map(state.actors.map(actor => [actor.id, structuredClone(actor)]));
     const proposals = state.actors.map(actor => {

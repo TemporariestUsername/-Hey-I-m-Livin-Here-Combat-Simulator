@@ -6,10 +6,24 @@ export type ActionKind =
 
 export interface Point { x: number; y: number }
 
+export interface Rectangle {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  blocksVision?: boolean;
+  blocksMovement?: boolean;
+}
+
 export interface ActorSpec {
   id: string;
   side: string;
   position: Point;
+  facingDegrees?: number;
+  visionRange?: number;
+  visionArcDegrees?: number;
+  movementSpeed?: number;
   readiness: number;
   stamina: number;
   resolve: number;
@@ -23,7 +37,7 @@ export interface ScenarioSpec {
   seed: number;
   pulseMs: 100;
   maxTicks: number;
-  map: { width: number; height: number };
+  map: { width: number; height: number; obstacles?: Rectangle[] };
   threat: { active: boolean; endsAtTick?: number };
   actors: ActorSpec[];
 }
@@ -48,7 +62,7 @@ export interface SimulationEvent {
   schemaVersion: typeof SCHEMA_VERSION;
   sequence: number;
   tick: number;
-  type: "simulation-started" | "threat-ended" | "intent-gated" | "intent-resolved" | "simulation-ended";
+  type: "simulation-started" | "threat-ended" | "observation-built" | "intent-gated" | "intent-resolved" | "movement-resolved" | "simulation-ended";
   payload: Record<string, unknown>;
   priorChecksum: string;
   checksum: string;

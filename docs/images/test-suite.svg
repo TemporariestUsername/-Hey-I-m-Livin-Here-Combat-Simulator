@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-labelledby="title description">
+  <title id="title">Test suite screenshot</title>
+  <desc id="description">A terminal showing all nine deterministic engine, geometry, sensing, movement, safety gate, and replay tests passing.</desc>
+  <rect width="1100" height="440" rx="12" fill="#111827"/>
+  <rect width="1100" height="42" rx="12" fill="#1f2937"/><rect y="30" width="1100" height="12" fill="#1f2937"/>
+  <circle cx="24" cy="21" r="7" fill="#fb7185"/><circle cx="48" cy="21" r="7" fill="#fbbf24"/><circle cx="72" cy="21" r="7" fill="#34d399"/>
+  <text x="550" y="27" text-anchor="middle" fill="#d1d5db" font-family="DejaVu Sans, sans-serif" font-size="15">Simulator test suite</text>
+  <g fill="#e5e7eb" font-family="DejaVu Sans Mono, monospace" font-size="17">
+    <text x="24" y="78"><tspan fill="#34d399">$</tspan> npm test</text>
+    <text x="24" y="116"><tspan fill="#34d399">✔</tspan> line of sight detects occlusion and respects non-blocking obstacles</text>
+    <text x="24" y="148"><tspan fill="#34d399">✔</tspan> swept movement cannot tunnel through walls and remains in bounds</text>
+    <text x="24" y="180"><tspan fill="#34d399">✔</tspan> observations enforce range, facing, occlusion, and stable ordering</text>
+    <text x="24" y="212"><tspan fill="#34d399">✔</tspan> named PRNG stream has a stable vector</text>
+    <text x="24" y="244"><tspan fill="#34d399">✔</tspan> identical inputs create byte-identical logs</text>
+    <text x="24" y="276"><tspan fill="#34d399">✔</tspan> replay verifies the event chain and final state</text>
+    <text x="24" y="308"><tspan fill="#34d399">✔</tspan> commitment is gated after the threat ends</text>
+    <text x="24" y="340"><tspan fill="#34d399">✔</tspan> withdraw movement uses observations and resolves during the pulse</text>
+    <text x="24" y="396" fill="#86efac">tests 9  |  pass 9  |  fail 0</text>
+  </g>
+</svg>

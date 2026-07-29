@@ -1,4 +1,5 @@
 import { SCHEMA_VERSION, type ActorSpec, type ScenarioSpec } from "./types.ts";
+import { lintProhibitedContent } from "./content-lint.ts";
 
 export interface ValidationResult { valid: boolean; errors: string[] }
 
@@ -6,7 +7,7 @@ const finiteIn = (value: unknown, min: number, max: number): value is number =>
   typeof value === "number" && Number.isFinite(value) && value >= min && value <= max;
 
 export function validateScenario(input: unknown): ValidationResult {
-  const errors: string[] = [];
+  const errors: string[] = [...lintProhibitedContent(input).errors];
   if (!input || typeof input !== "object") return { valid: false, errors: ["scenario must be an object"] };
   const value = input as Partial<ScenarioSpec>;
   if (value.schemaVersion !== SCHEMA_VERSION) errors.push(`schemaVersion must be ${SCHEMA_VERSION}`);

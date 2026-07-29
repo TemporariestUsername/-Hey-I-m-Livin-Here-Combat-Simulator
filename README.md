@@ -4,6 +4,8 @@ A deterministic, explainable scenario simulator for comparing defensive decision
 
 > **Project status:** Phase 2 foundation. The repository contains a headless engine and CLI; it is not a complete real-world model, safety certification, or source of legal advice.
 
+Phase 0 is complete: its architecture decisions, safety policy and review, threat model, decision register, and benchmark baseline are recorded under `docs/`.
+
 ## Current capabilities
 
 - Seeded 100 ms simulation pulses and named PCG32 random streams.
@@ -14,7 +16,9 @@ A deterministic, explainable scenario simulator for comparing defensive decision
 - Simultaneous movement proposals, map-bound clamping, and swept collision that prevents tunneling.
 - A default safety gate that replaces post-threat commitment with withdrawal.
 - Actor policy bindings with safety-first and random-valid policy plug-ins and explainable candidate scores.
+- Explainable tempo profiles from readiness, stamina, shock, and bounded contact-stream noise, plus deterministic interrupt eligibility for mutual commitments.
 - Scenario validation for identifiers, numeric limits, positions, obstacles, and vision/movement settings.
+- A reviewed Phase 0 safety baseline with prohibited-content linting, threat modeling, closed architecture decisions, and a repeatable 32-actor benchmark fixture.
 
 ## Requirements
 
@@ -25,6 +29,7 @@ A deterministic, explainable scenario simulator for comparing defensive decision
 
 ```bash
 npm test
+npm run benchmark
 npm run validate -- packages/scenarios/fixtures/threat-ends.json
 npm run run -- packages/scenarios/fixtures/threat-ends.json run-log.json
 npm run replay -- run-log.json
@@ -87,9 +92,10 @@ For each pulse implemented by the current vertical slice, the engine:
 1. Applies the scheduled threat transition.
 2. Builds observations from a stable actor snapshot using range, facing, and line of sight.
 3. Invokes each actor's bound policy, records its candidates, rationale, and random samples, then safety-gates the selected intent.
-4. Computes all withdrawal movement proposals from the same post-intent snapshot.
-5. Applies map bounds and swept obstacle collision, then records every movement result.
-6. Emits checksum-chained observation, intent, movement, and lifecycle events.
+4. Computes explainable tempo profiles and interrupt eligibility for mutually visible opposing commitments.
+5. Computes all withdrawal movement proposals from the same post-intent snapshot.
+6. Applies map bounds and swept obstacle collision, then records every movement result.
+7. Emits checksum-chained observation, intent, tempo, interrupt, movement, and lifecycle events.
 
 Withdrawal moves directly away from the nearest visible actor on another side. Ties are resolved by stable actor ID. If there is no visible opponent, the actor holds position; collision rejects the full movement rather than allowing an actor to tunnel through an obstacle.
 
@@ -105,7 +111,7 @@ Run the complete suite with:
 npm test
 ```
 
-The suite covers PRNG vectors, byte-identical logs, replay integrity, the post-threat safety gate, scenario validation, line-of-sight occlusion, swept collision, map bounds, observation ordering, and observation-driven withdrawal.
+The suite covers all named PRNG vectors, fresh-process byte-identical logs, replay integrity, the post-threat safety gate, prohibited-content rejection, scenario validation, line-of-sight occlusion, swept collision, map bounds, observation ordering, observation-driven withdrawal, tempo traces, and interrupt eligibility. The benchmark command reports the current 32-actor, 600-pulse median and p95 against the provisional Phase 2 budget.
 
 ## Screenshots
 
@@ -141,7 +147,7 @@ The current automated suite exercises the deterministic engine, policy bindings,
 
 ### Next
 
-The next Phase 2 increment is tempo and interrupt eligibility, followed by abstract contact/effect packets, recovery, objectives, terminal conditions, and complete trace records. These mechanics will remain deterministic and will apply effects simultaneously to avoid actor-order bias.
+The next Phase 2 increment is abstract contact and simultaneous effect packets, followed by recovery, objectives, terminal conditions, and complete trace records. These mechanics will remain deterministic and will apply effects simultaneously to avoid actor-order bias.
 
 ## Repository layout
 

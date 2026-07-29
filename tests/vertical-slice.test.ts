@@ -18,3 +18,10 @@ test("commitment is gated after the threat ends", () => {
   assert.ok(log.events.some(event => event.type === "intent-gated" && event.payload.failedPredicate === "active-threat-required"));
   assert.equal(log.finalState.actors.find(actor => actor.id === "defender")?.intent, "withdraw");
 });
+test("withdraw movement uses observations and resolves during the pulse", () => {
+  const log = runSimulation(scenario);
+  const defender = log.finalState.actors.find(actor => actor.id === "defender")!;
+  assert.ok(defender.position.x < scenario.actors.find(actor => actor.id === "defender")!.position.x);
+  assert.ok(log.events.some(event => event.type === "observation-built" && event.payload.observerId === "defender"));
+  assert.ok(log.events.some(event => event.type === "movement-resolved" && event.payload.actorId === "defender"));
+});

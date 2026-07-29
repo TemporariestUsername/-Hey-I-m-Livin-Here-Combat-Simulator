@@ -1,6 +1,8 @@
 import { SCHEMA_VERSION, assertScenario, type ActionKind, type RunLog, type ScenarioSpec, type SimulationEvent, type SimulationState } from "../../schema/src/index.ts";
 import { checksum, GENESIS_CHECKSUM } from "./checksum.ts";
+import { distance, resolveMovement } from "./geometry.ts";
 import { namedStream } from "./prng.ts";
+import { buildObservations } from "./sensing.ts";
 
 export const ENGINE_VERSION = "0.1.0";
 
@@ -29,6 +31,8 @@ export function runSimulation(scenario: ScenarioSpec): RunLog {
       state.threatActive = false;
       append(events, state.tick, "threat-ended", { reason: "scheduled-transition" });
     }
+    const observations = buildObservations(state.actors, scenario.map.obstacles);
+    for (const observation of observations) append(events, state.tick, "observation-built", { ...observation });
     for (const actor of state.actors) {
       const proposed: ActionKind = actor.threatened && policyRng.nextFloat() >= 0.2 ? "commit" : "withdraw";
       const selected = proposed === "commit" && !state.threatActive ? "withdraw" : proposed;
@@ -36,6 +40,31 @@ export function runSimulation(scenario: ScenarioSpec): RunLog {
       actor.intent = selected;
       actor.stamina = Math.max(0, Number((actor.stamina - (selected === "commit" ? 0.02 : 0.005)).toFixed(6)));
       append(events, state.tick, "intent-resolved", { actorId: actor.id, selected, stamina: actor.stamina });
+    }
+    const snapshot = new Map(state.actors.map(actor => [actor.id, structuredClone(actor)]));
+    const proposals = state.actors.map(actor => {
+      if (actor.intent !== "withdraw") return { actorId: actor.id, position: { ...actor.position }, blocked: false };
+      const visible = observations.find(item => item.observerId === actor.id)?.visibleActorIds ?? [];
+      const opponents = visible.flatMap(id => {
+        const target = snapshot.get(id);
+        return target && target.side !== actor.side ? [target] : [];
+      });
+      const nearest = opponents.sort((a, b) => distance(actor.position, a.position) - distance(actor.position, b.position) || a.id.localeCompare(b.id))[0];
+      if (!nearest) return { actorId: actor.id, position: { ...actor.position }, blocked: false };
+      const dx = actor.position.x - nearest.position.x;
+      const dy = actor.position.y - nearest.position.y;
+      const magnitude = Math.hypot(dx, dy);
+      if (magnitude === 0) return { actorId: actor.id, position: { ...actor.position }, blocked: false };
+      const step = (actor.movementSpeed ?? 1.4) * scenario.pulseMs / 1000;
+      const proposed = { x: actor.position.x + dx / magnitude * step, y: actor.position.y + dy / magnitude * step };
+      const position = resolveMovement(actor.position, proposed, scenario.map);
+      return { actorId: actor.id, position, blocked: position.x === actor.position.x && position.y === actor.position.y };
+    });
+    for (const proposal of proposals) {
+      const actor = state.actors.find(item => item.id === proposal.actorId)!;
+      const from = { ...actor.position };
+      actor.position = proposal.position;
+      append(events, state.tick, "movement-resolved", { actorId: actor.id, from, to: { ...actor.position }, blocked: proposal.blocked });
     }
     state.done = state.tick >= scenario.maxTicks;
   }

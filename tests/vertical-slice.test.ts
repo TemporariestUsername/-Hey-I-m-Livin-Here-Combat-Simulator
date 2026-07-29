@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { namedStream, replay, runSimulation } from "../packages/engine/src/index.ts";
+import { randomValidPolicy, safetyFirstPolicy } from "../packages/policies/src/index.ts";
 import { validateScenario, type ScenarioSpec } from "../packages/schema/src/index.ts";
 
 const scenario = JSON.parse(await readFile(new URL("../packages/scenarios/fixtures/threat-ends.json", import.meta.url), "utf8")) as ScenarioSpec;
@@ -17,6 +18,26 @@ test("commitment is gated after the threat ends", () => {
   const log = runSimulation(scenario);
   assert.ok(log.events.some(event => event.type === "intent-gated" && event.payload.failedPredicate === "active-threat-required"));
   assert.equal(log.finalState.actors.find(actor => actor.id === "defender")?.intent, "withdraw");
+});
+test("actors are routed through their bound policy with an explanation", () => {
+  const log = runSimulation(scenario);
+  const safetyDecision = log.events.find(event => event.type === "policy-decided" && event.payload.actorId === "aggressor");
+  assert.equal(safetyDecision?.payload.policyId, "safety-first");
+  assert.equal(safetyDecision?.payload.policyVersion, safetyFirstPolicy.version);
+  assert.equal(safetyDecision?.payload.selected, "withdraw");
+  assert.deepEqual(safetyDecision?.payload.rngSamples, []);
+
+  const randomDecision = log.events.find(event => event.type === "policy-decided" && event.payload.actorId === "defender");
+  assert.equal(randomDecision?.payload.policyId, randomValidPolicy.id);
+  assert.ok(Array.isArray(randomDecision?.payload.candidates));
+  assert.equal((randomDecision?.payload.rngSamples as number[]).length, 1);
+});
+test("scenario validation rejects unknown policy bindings", () => {
+  const invalid = structuredClone(scenario) as ScenarioSpec & { actors: Array<ScenarioSpec["actors"][number] & { policyId?: string }> };
+  invalid.actors[0]!.policyId = "missing-policy";
+  const result = validateScenario(invalid);
+  assert.equal(result.valid, false);
+  assert.ok(result.errors.includes("actors[0].policyId must identify a built-in policy"));
 });
 test("withdraw movement uses observations and resolves during the pulse", () => {
   const log = runSimulation(scenario);

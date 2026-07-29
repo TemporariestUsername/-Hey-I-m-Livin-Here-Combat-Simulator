@@ -52,6 +52,7 @@ function validateActor(actor: ActorSpec, index: number, scenario: Partial<Scenar
   if (actor?.visionRange !== undefined && !finiteIn(actor.visionRange, 0, 1000)) errors.push(`${at}.visionRange must be from 0 to 1000 metres`);
   if (actor?.visionArcDegrees !== undefined && !finiteIn(actor.visionArcDegrees, 0, 360)) errors.push(`${at}.visionArcDegrees must be from 0 to 360`);
   if (actor?.movementSpeed !== undefined && !finiteIn(actor.movementSpeed, 0, 10)) errors.push(`${at}.movementSpeed must be from 0 to 10 metres per second`);
+  if (actor?.policyId !== undefined && actor.policyId !== "safety-first" && actor.policyId !== "random-valid") errors.push(`${at}.policyId must identify a built-in policy`);
 }
 
 export function assertScenario(input: unknown): asserts input is ScenarioSpec {

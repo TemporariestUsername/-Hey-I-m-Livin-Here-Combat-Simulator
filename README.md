@@ -13,6 +13,7 @@ A deterministic, explainable scenario simulator for comparing defensive decision
 - Rectangular obstacles with independent vision and movement blocking flags.
 - Simultaneous movement proposals, map-bound clamping, and swept collision that prevents tunneling.
 - A default safety gate that replaces post-threat commitment with withdrawal.
+- Actor policy bindings with safety-first and random-valid policy plug-ins and explainable candidate scores.
 - Scenario validation for identifiers, numeric limits, positions, obstacles, and vision/movement settings.
 
 ## Requirements
@@ -30,12 +31,6 @@ npm run replay -- run-log.json
 ```
 
 The CLI defaults to `packages/scenarios/fixtures/threat-ends.json` when an input is omitted. `run` writes a self-contained artifact with the scenario, initial and final state, immutable events, engine version, and final checksum.
-
-### Working CLI example
-
-The same checksum shown by `run` and `replay` demonstrates that replay reconstructed the recorded result.
-
-![Terminal running and replaying the threat-ends scenario](docs/images/cli-run-replay.svg)
 
 ## Scenario format
 
@@ -91,7 +86,7 @@ For each pulse implemented by the current vertical slice, the engine:
 
 1. Applies the scheduled threat transition.
 2. Builds observations from a stable actor snapshot using range, facing, and line of sight.
-3. Selects and safety-gates each actor's intent.
+3. Invokes each actor's bound policy, records its candidates, rationale, and random samples, then safety-gates the selected intent.
 4. Computes all withdrawal movement proposals from the same post-intent snapshot.
 5. Applies map bounds and swept obstacle collision, then records every movement result.
 6. Emits checksum-chained observation, intent, movement, and lifecycle events.
@@ -110,15 +105,50 @@ Run the complete suite with:
 npm test
 ```
 
-![Terminal showing the passing deterministic simulator test suite](docs/images/test-suite.svg)
-
 The suite covers PRNG vectors, byte-identical logs, replay integrity, the post-threat safety gate, scenario validation, line-of-sight occlusion, swept collision, map bounds, observation ordering, and observation-driven withdrawal.
+
+## Screenshots
+
+The CLI run and replay report the same checksum, demonstrating that replay reconstructed the recorded policy-enabled result.
+
+![Terminal running and replaying the threat-ends scenario](docs/images/cli-run-replay.svg)
+
+The current automated suite exercises the deterministic engine, policy bindings, safety gate, validation, sensing, and movement behavior.
+
+![Terminal showing all eleven simulator tests passing](docs/images/test-suite.svg)
+
+## Development diary
+
+### 2026-07-29 — Explainable policy boundary
+
+- Replaced intent selection embedded in the engine with a versioned policy contract.
+- Added `safety-first` and `random-valid` baselines so scenario actors can explicitly declare how they choose candidate actions.
+- Kept the rules-of-engagement gate in the engine. Policies propose actions; they cannot bypass the post-threat commitment prohibition.
+- Added `policy-decided` events containing candidate scores, feature contributions, rationale, and bounded random samples. This is the first increment toward full per-tick trace records.
+- Added validation and regression coverage for actor policy bindings, then refreshed the CLI and test screenshots to reflect the policy-enabled event log.
+
+### 2026-07-29 — Sensing and simultaneous withdrawal
+
+- Added range, facing, actor activity, and obstacle occlusion to the observation snapshot.
+- Added simultaneous withdrawal proposals, map-bound clamping, and swept obstacle collision.
+- Documented the author, validation, run, replay, and inspection workflows while keeping the implementation headless.
+
+### 2026-07-29 — Deterministic vertical slice
+
+- Established the 100 ms pulse loop, named PCG32 streams, stable actor ordering, and checksum-chained events.
+- Added the `validate`, `run`, and `replay` CLI commands and the threat-termination safety fixture.
+- Chose deterministic rerun verification for the first replay implementation; periodic snapshots and branch-from-tick remain later roadmap work.
+
+### Next
+
+The next Phase 2 increment is tempo and interrupt eligibility, followed by abstract contact/effect packets, recovery, objectives, terminal conditions, and complete trace records. These mechanics will remain deterministic and will apply effects simultaneously to avoid actor-order bias.
 
 ## Repository layout
 
 ```text
 apps/cli/                 validate, run, and replay commands
 packages/engine/          deterministic simulation, PRNG, geometry, sensing, checksums
+packages/policies/        policy contracts and built-in baseline policies
 packages/schema/          shared types and runtime scenario validation
 packages/scenarios/       canonical fixtures
 tests/                    engine and geometry integration tests

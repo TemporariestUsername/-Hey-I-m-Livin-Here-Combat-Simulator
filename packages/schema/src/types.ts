@@ -28,6 +28,7 @@ export interface ActorSpec {
   stamina: number;
   resolve: number;
   threatened?: boolean;
+  policyId?: "safety-first" | "random-valid";
 }
 
 export interface ScenarioSpec {
@@ -62,7 +63,7 @@ export interface SimulationEvent {
   schemaVersion: typeof SCHEMA_VERSION;
   sequence: number;
   tick: number;
-  type: "simulation-started" | "threat-ended" | "observation-built" | "intent-gated" | "intent-resolved" | "movement-resolved" | "simulation-ended";
+  type: "simulation-started" | "threat-ended" | "observation-built" | "policy-decided" | "intent-gated" | "intent-resolved" | "movement-resolved" | "simulation-ended";
   payload: Record<string, unknown>;
   priorChecksum: string;
   checksum: string;

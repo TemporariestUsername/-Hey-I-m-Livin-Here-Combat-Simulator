@@ -8,7 +8,7 @@
   "map": { "width": 10, "height": 10 },
   "threat": { "active": true, "endsAtTick": 3 },
   "actors": [
-    { "id": "defender", "side": "protected", "position": { "x": 2, "y": 5 }, "facingDegrees": 0, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.4, "readiness": 0.8, "stamina": 1, "resolve": 0.8, "threatened": true },
-    { "id": "aggressor", "side": "threat", "position": { "x": 5, "y": 5 }, "facingDegrees": 180, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.2, "readiness": 0.6, "stamina": 1, "resolve": 0.6 }
+    { "id": "defender", "side": "protected", "position": { "x": 2, "y": 5 }, "facingDegrees": 0, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.4, "readiness": 0.8, "stamina": 1, "resolve": 0.8, "threatened": true, "policyId": "random-valid" },
+    { "id": "aggressor", "side": "threat", "position": { "x": 5, "y": 5 }, "facingDegrees": 180, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.2, "readiness": 0.6, "stamina": 1, "resolve": 0.6, "policyId": "safety-first" }
   ]
 }

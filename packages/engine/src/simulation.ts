@@ -1,4 +1,5 @@
 import { SCHEMA_VERSION, assertScenario, type ActionKind, type RunLog, type ScenarioSpec, type SimulationEvent, type SimulationState } from "../../schema/src/index.ts";
+import { getBuiltInPolicy } from "../../policies/src/index.ts";
 import { checksum, GENESIS_CHECKSUM } from "./checksum.ts";
 import { distance, resolveMovement } from "./geometry.ts";
 import { namedStream } from "./prng.ts";
@@ -34,7 +35,19 @@ export function runSimulation(scenario: ScenarioSpec): RunLog {
     const observations = buildObservations(state.actors, scenario.map.obstacles);
     for (const observation of observations) append(events, state.tick, "observation-built", { ...observation });
     for (const actor of state.actors) {
-      const proposed: ActionKind = actor.threatened && policyRng.nextFloat() >= 0.2 ? "commit" : "withdraw";
+      const observation = observations.find(item => item.observerId === actor.id)!;
+      const policy = getBuiltInPolicy(actor.policyId ?? "random-valid");
+      const decision = policy.decide({ actor, observation, threatActive: state.threatActive }, policyRng);
+      const proposed: ActionKind = decision.selected;
+      append(events, state.tick, "policy-decided", {
+        actorId: actor.id,
+        policyId: policy.id,
+        policyVersion: policy.version,
+        selected: decision.selected,
+        candidates: decision.candidates,
+        rationale: decision.rationale,
+        rngSamples: decision.rngSamples,
+      });
       const selected = proposed === "commit" && !state.threatActive ? "withdraw" : proposed;
       if (selected !== proposed) append(events, state.tick, "intent-gated", { actorId: actor.id, proposed, selected, failedPredicate: "active-threat-required" });
       actor.intent = selected;

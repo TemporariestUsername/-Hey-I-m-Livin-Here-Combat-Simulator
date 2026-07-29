@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "threat-ends",
+  "name": "Threat termination safety fixture",
+  "seed": 77,
+  "pulseMs": 100,
+  "maxTicks": 5,
+  "map": { "width": 10, "height": 10 },
+  "threat": { "active": true, "endsAtTick": 3 },
+  "actors": [
+    { "id": "defender", "side": "protected", "position": { "x": 2, "y": 5 }, "readiness": 0.8, "stamina": 1, "resolve": 0.8, "threatened": true },
+    { "id": "aggressor", "side": "threat", "position": { "x": 5, "y": 5 }, "readiness": 0.6, "stamina": 1, "resolve": 0.6 }
+  ]
+}

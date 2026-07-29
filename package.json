@@ -1,0 +1,12 @@
+{
+  "name": "living-here-combat-simulator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "validate": "node apps/cli/src/index.ts validate",
+    "run": "node apps/cli/src/index.ts run",
+    "replay": "node apps/cli/src/index.ts replay"
+  }
+}

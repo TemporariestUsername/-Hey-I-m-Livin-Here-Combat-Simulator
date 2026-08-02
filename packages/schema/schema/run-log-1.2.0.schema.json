@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://living-here.example/schema/run-log-1.2.0.schema.json",
+  "title": "Living Here Run Log 1.2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "engineVersion", "scenario", "initialState", "events", "traces", "finalState", "finalChecksum"],
+  "properties": {
+    "schemaVersion": { "const": "1.2.0" },
+    "engineVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "scenario": { "type": "object" },
+    "initialState": { "type": "object" },
+    "events": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "type": "object" }
+    },
+    "traces": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "type": "object" }
+    },
+    "finalState": { "type": "object" },
+    "finalChecksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

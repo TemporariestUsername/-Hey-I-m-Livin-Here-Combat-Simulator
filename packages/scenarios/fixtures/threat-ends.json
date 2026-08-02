@@ -1,14 +1,80 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.3.0",
   "id": "threat-ends",
-  "name": "Threat termination safety fixture",
+  "name": "Effect-triggered threat termination safety fixture",
   "seed": 77,
   "pulseMs": 100,
   "maxTicks": 5,
   "map": { "width": 10, "height": 10 },
-  "threat": { "active": true, "endsAtTick": 3 },
+  "threat": {
+    "active": true,
+    "severity": 0.9,
+    "immediacy": 1,
+    "retreatAvailable": true,
+    "threatenedActorIds": ["defender"]
+  },
+  "rules": {
+    "physics": {
+      "enabled": true,
+      "interruptMargin": 0.15,
+      "tempoNoise": 0,
+      "contactNoise": 0,
+      "recoveryPerPulse": 0.03,
+      "impairmentRecoveryPerPulse": 0.003,
+      "separationScaleM": 0.1,
+      "neutralizationThreshold": 0.55
+    }
+  },
+  "objectives": [{ "id": "end-threat", "kind": "neutralize-side", "side": "threat" }],
+  "terminalConditions": [{ "kind": "side-neutralized", "side": "threat" }],
   "actors": [
-    { "id": "defender", "side": "protected", "position": { "x": 2, "y": 5 }, "facingDegrees": 0, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.4, "readiness": 0.8, "stamina": 1, "resolve": 0.8, "threatened": true, "policyId": "random-valid" },
-    { "id": "aggressor", "side": "threat", "position": { "x": 5, "y": 5 }, "facingDegrees": 180, "visionRange": 10, "visionArcDegrees": 120, "movementSpeed": 1.2, "readiness": 0.6, "stamina": 1, "resolve": 0.6, "policyId": "safety-first" }
+    {
+      "id": "defender",
+      "side": "protected",
+      "position": { "x": 5, "y": 5 },
+      "facingDegrees": 0,
+      "visionRange": 10,
+      "visionArcDegrees": 180,
+      "movementSpeed": 1.6,
+      "massKg": 80,
+      "radiusM": 0.3,
+      "skill": 0.9,
+      "balance": 0.9,
+      "guard": 0.7,
+      "mobility": 0.95,
+      "surprise": 0.9,
+      "reachM": 1,
+      "protection": 0.1,
+      "stance": "committed",
+      "readiness": 0.95,
+      "stamina": 1,
+      "resolve": 0.9,
+      "threatened": true,
+      "policyId": "random-valid"
+    },
+    {
+      "id": "aggressor",
+      "side": "threat",
+      "position": { "x": 5.8, "y": 5 },
+      "facingDegrees": 180,
+      "visionRange": 10,
+      "visionArcDegrees": 180,
+      "movementSpeed": 1.2,
+      "massKg": 70,
+      "radiusM": 0.3,
+      "skill": 0.5,
+      "balance": 0.6,
+      "guard": 0.3,
+      "mobility": 0.75,
+      "surprise": 0,
+      "reachM": 0.8,
+      "protection": 0,
+      "stance": "neutral",
+      "readiness": 0.4,
+      "stamina": 0.9,
+      "resolve": 0.5,
+      "threatened": true,
+      "policyId": "safety-first"
+    }
   ]
 }

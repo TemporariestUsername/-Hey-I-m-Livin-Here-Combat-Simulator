@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "open-regulated-duel",
+  "name": "Open regulated duel contrast",
+  "seed": 101,
+  "pulseMs": 100,
+  "maxTicks": 12,
+  "map": { "width": 10, "height": 8, "obstacles": [] },
+  "threat": { "active": true, "endsAtTick": 12 },
+  "rules": {
+    "physics": { "enabled": true, "tempoNoise": 0.04, "contactNoise": 0.06, "neutralizationThreshold": 0.95 }
+  },
+  "objectives": [{ "id": "threat-clears", "kind": "protect-side", "side": "blue" }],
+  "terminalConditions": [{ "kind": "threat-ended" }],
+  "actors": [
+    {
+      "id": "blue-reference", "side": "blue", "position": { "x": 4, "y": 4 },
+      "facingDegrees": 0, "visionRange": 10, "visionArcDegrees": 360,
+      "movementSpeed": 1.8, "massKg": 78, "radiusM": 0.25, "skill": 0.7,
+      "balance": 0.9, "guard": 0.7, "mobility": 0.9, "surprise": 0,
+      "reachM": 0.7, "protection": 0.1, "stance": "guarded",
+      "readiness": 0.75, "stamina": 1, "resolve": 0.75,
+      "threatened": true, "policyId": "chen-inspired"
+    },
+    {
+      "id": "amber-reference", "side": "amber", "position": { "x": 4.9, "y": 4 },
+      "facingDegrees": 180, "visionRange": 10, "visionArcDegrees": 360,
+      "movementSpeed": 1.8, "massKg": 78, "radiusM": 0.25, "skill": 0.7,
+      "balance": 0.9, "guard": 0.7, "mobility": 0.9, "surprise": 0,
+      "reachM": 0.7, "protection": 0.1, "stance": "guarded",
+      "readiness": 0.75, "stamina": 1, "resolve": 0.75,
+      "threatened": true, "policyId": "sportive"
+    }
+  ]
+}

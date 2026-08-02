@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://living-here.example/schema/simulation-state-1.1.0.schema.json",
+  "title": "Living Here Simulation State 1.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "scenarioId", "tick", "elapsedMs", "threatActive", "done", "actors", "objectiveProgress"],
+  "properties": {
+    "schemaVersion": { "const": "1.1.0" },
+    "scenarioId": { "$ref": "#/$defs/id" },
+    "tick": { "type": "integer", "minimum": 0, "maximum": 36000 },
+    "elapsedMs": { "type": "integer", "minimum": 0, "maximum": 3600000 },
+    "threatActive": { "type": "boolean" },
+    "done": { "type": "boolean" },
+    "terminalReason": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "objectiveProgress": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "actors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/actorState" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0, "maximum": 1000 },
+        "y": { "type": "number", "minimum": 0, "maximum": 1000 }
+      }
+    },
+    "action": {
+      "enum": ["observe", "communicate", "reposition", "protect", "withdraw", "ready-tool", "commit", "aid-ally", "rally", "wait"]
+    },
+    "actorState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "side", "position", "readiness", "stamina", "resolve", "active", "intent", "shock", "balance", "guard", "mobility", "impairment", "disruption", "recoveryTicks", "neutralized"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "side": { "$ref": "#/$defs/id" },
+        "position": { "$ref": "#/$defs/point" },
+        "facingDegrees": { "type": "number", "minimum": 0, "maximum": 360 },
+        "visionRange": { "type": "number", "minimum": 0, "maximum": 1000 },
+        "visionArcDegrees": { "type": "number", "minimum": 0, "maximum": 360 },
+        "movementSpeed": { "type": "number", "minimum": 0, "maximum": 10 },
+        "massKg": { "type": "number", "minimum": 35, "maximum": 200 },
+        "radiusM": { "type": "number", "minimum": 0.15, "maximum": 0.75 },
+        "skill": { "type": "number", "minimum": 0, "maximum": 1 },
+        "readiness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "stamina": { "type": "number", "minimum": 0, "maximum": 1 },
+        "resolve": { "type": "number", "minimum": 0, "maximum": 1 },
+        "balance": { "type": "number", "minimum": 0, "maximum": 1 },
+        "guard": { "type": "number", "minimum": 0, "maximum": 1 },
+        "mobility": { "type": "number", "minimum": 0, "maximum": 1 },
+        "surprise": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reachM": { "type": "number", "minimum": 0.2, "maximum": 3 },
+        "protection": { "type": "number", "minimum": 0, "maximum": 1 },
+        "stance": { "enum": ["neutral", "mobile", "guarded", "committed"] },
+        "threatened": { "type": "boolean" },
+        "policyId": { "enum": ["safety-first", "random-valid"] },
+        "active": { "type": "boolean" },
+        "intent": { "$ref": "#/$defs/action" },
+        "shock": { "type": "number", "minimum": 0, "maximum": 1 },
+        "impairment": { "type": "number", "minimum": 0, "maximum": 1 },
+        "disruption": { "type": "number", "minimum": 0, "maximum": 1 },
+        "recoveryTicks": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "neutralized": { "type": "boolean" }
+      }
+    }
+  }
+}

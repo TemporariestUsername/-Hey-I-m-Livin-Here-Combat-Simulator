@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "negative-active-markup",
+  "name": "<script>unsafe()</script>",
+  "seed": 1,
+  "pulseMs": 100,
+  "maxTicks": 1,
+  "map": { "width": 10, "height": 10 },
+  "threat": { "active": false },
+  "actors": [
+    {
+      "id": "actor",
+      "side": "protected",
+      "position": { "x": 1, "y": 1 },
+      "readiness": 1,
+      "stamina": 1,
+      "resolve": 1
+    }
+  ]
+}

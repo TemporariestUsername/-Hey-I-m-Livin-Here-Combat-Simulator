@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-labelledby="title description">
   <title id="title">CLI run and replay screenshot</title>
-  <desc id="description">A terminal showing a policy-enabled scenario run producing 46 events followed by a successful deterministic replay at tick five.</desc>
+  <desc id="description">A terminal showing a policy-enabled scenario run producing 43 events followed by a successful deterministic replay at tick five.</desc>
   <rect width="1100" height="360" rx="12" fill="#111827"/>
   <rect width="1100" height="42" rx="12" fill="#1f2937"/><rect y="30" width="1100" height="12" fill="#1f2937"/>
   <circle cx="24" cy="21" r="7" fill="#fb7185"/><circle cx="48" cy="21" r="7" fill="#fbbf24"/><circle cx="72" cy="21" r="7" fill="#34d399"/>
   <text x="550" y="27" text-anchor="middle" fill="#d1d5db" font-family="DejaVu Sans, sans-serif" font-size="15">Simulator CLI — run and replay</text>
   <g fill="#e5e7eb" font-family="DejaVu Sans Mono, monospace" font-size="17">
     <text x="24" y="82"><tspan fill="#34d399">$</tspan> npm run run -- packages/scenarios/fixtures/threat-ends.json run-log.json</text>
-    <text x="24" y="122" fill="#93c5fd">Wrote 46 events to run-log.json;</text>
+    <text x="24" y="122" fill="#93c5fd">Wrote 43 events to run-log.json;</text>
     <text x="24" y="152" fill="#93c5fd">final checksum c6fb93c8e1ddf5294bfaa2131f2a791ffe8029d57c583e2f833b23ff9f7be01b</text>
     <text x="24" y="212"><tspan fill="#34d399">$</tspan> npm run replay -- run-log.json</text>
     <text x="24" y="252" fill="#93c5fd">Replay verified at tick 5;</text>

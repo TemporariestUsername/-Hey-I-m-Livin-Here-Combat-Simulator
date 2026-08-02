@@ -1,4 +1,7 @@
 node_modules/
+test-results/
+playwright-report/
+.living-here/
 dist/
 *.log
 run-log.json

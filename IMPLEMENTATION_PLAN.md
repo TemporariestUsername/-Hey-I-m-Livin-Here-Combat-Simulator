@@ -364,11 +364,15 @@ Store snapshots at a configurable interval and derive all intermediate states by
 
 **Exit criteria:** all open design choices have owners, risk level, decision date, and testable consequence.
 
+**Status:** Complete as of 2026-07-29. See `docs/phase-0-closure.md` and `docs/phase-0-decision-register.md` for the requirement-by-requirement evidence.
+
 ### Phase 1 — Schemas and deterministic vertical slice
 
 **Deliverables:** monorepo, schema package, validator, PRNG substreams, minimal state reducer, CLI `validate/run/replay`, event/checksum log, one two-actor fixture.
 
 **Exit criteria:** the fixture produces byte-identical normalized logs across two fresh processes and replay reconstructs the final checksum.
+
+**Status:** Complete. Fresh-process artifact equality and replay reconstruction are enforced by `tests/phase-zero.test.ts`.
 
 ### Phase 2 — Core individual engine
 
@@ -376,11 +380,15 @@ Store snapshots at a configurable interval and derive all intermediate states by
 
 **Exit criteria:** unit/property suites pass; no actor-order bias; supported-size benchmark meets the headless target.
 
+**Status:** Complete and reconfirmed for Engine 0.4. The full 32-actor/600-pulse ten-sample benchmark records p95 948.659 ms below the unchanged 1,000 ms target without changing artifact identity; see `docs/phase-2-closure.md`.
+
 ### Phase 3 — Threat, morale, squads, and policies
 
 **Deliverables:** engagement gates, threat transitions, individual morale, squad cohesion, cascades, exits/routing, five policy adapters, provenance-tagged weights.
 
 **Exit criteria:** reference qualitative tests pass for disengagement, cascade behavior, and doctrine distinctiveness without violating invariants.
+
+**Status:** Complete as of 2026-08-02. See `docs/phase-3-closure.md` for deliverable and exit-criterion evidence.
 
 ### Phase 4 — API, persistence, and batch experiments
 
@@ -388,11 +396,15 @@ Store snapshots at a configurable interval and derive all intermediate states by
 
 **Exit criteria:** contract and failure-injection suites pass; interrupted jobs resume without duplicate episodes.
 
+**Status:** Complete as of 2026-08-02 for the loopback-only Version 1 service boundary. See `docs/phase-4-closure.md`.
+
 ### Phase 5 — Web authoring and replay
 
 **Deliverables:** accessible editor, timeline, validation, run controls, replay, explanation panel, comparison view, preset library.
 
 **Exit criteria:** end-to-end author/run/replay/export succeeds using only keyboard controls and automated accessibility checks have no critical violations.
+
+**Status:** Complete as of 2026-08-02. See `docs/phase-5-closure.md` for automated and browser acceptance evidence.
 
 ### Phase 6 — Calibration and canonical suite
 
@@ -400,11 +412,15 @@ Store snapshots at a configurable interval and derive all intermediate states by
 
 **Exit criteria:** approved qualitative signatures, stable tolerance bands, no single unexplained coefficient dominates primary outcomes.
 
+**Status:** Complete as of 2026-08-03. Independent human source-trait approval is recorded against the hash-bound review package; see `docs/phase-6-closure.md` and `docs/calibration/source-trait-review.md`.
+
 ### Phase 7 — Hardening and release
 
 **Deliverables:** security review, load tests, backup/restore, migration rehearsal, operations guide, user guide, disclaimers, versioned example artifacts, release candidate.
 
 **Exit criteria:** release checklist passes, severity-one issues are closed, golden replays match, and rollback is rehearsed.
+
+**Status:** Version 1.0.0 complete as of 2026-08-03 for the documented local-only supported boundary; see `docs/phase-7-closure.md`.
 
 ## 15. Definition of Done
 

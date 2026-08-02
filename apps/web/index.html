@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#101b20">
+  <title>Living Here — Scenario Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to simulator</a>
+  <header class="topbar">
+    <a class="brand" href="#workspace" aria-label="Living Here scenario lab home">
+      <span class="brand-mark" aria-hidden="true">LH</span>
+      <span><strong>Living Here</strong><small>Scenario Lab / Engine 0.4</small></span>
+    </a>
+    <nav aria-label="Workspace views">
+      <button class="nav-tab is-active" data-view="author" aria-pressed="true">Author</button>
+      <button class="nav-tab" data-view="replay" aria-pressed="false">Replay</button>
+      <button class="nav-tab" data-view="compare" aria-pressed="false">Compare</button>
+    </nav>
+    <div class="top-actions">
+      <span id="save-state" class="save-state">Preset loaded</span>
+      <button id="export-scenario" class="button button-ghost">Export</button>
+      <label class="button button-ghost" for="import-file">Import<span class="sr-only"> scenario JSON</span></label>
+      <input id="import-file" class="sr-only" type="file" accept="application/json,.json">
+      <button id="run-scenario" class="button button-primary">Run scenario <kbd>⌘↵</kbd></button>
+    </div>
+  </header>
+
+  <main id="workspace" tabindex="-1">
+    <section class="workspace-grid" data-panel="author">
+      <aside class="rail scenario-rail" aria-label="Scenario structure">
+        <div class="rail-heading">
+          <div><span class="eyebrow">Scenario</span><h1 id="scenario-title">Loading…</h1><label class="preset-label" for="preset-select">Preset library · read only</label><select id="preset-select"><option value="morale-cascade-1v3">One versus three</option><option value="sudden-crisis-physics">Sudden crisis</option><option value="threat-ends">Threat termination</option><option value="open-regulated-duel">Open regulated duel</option><option value="crowd-broken-sightlines">Broken sightlines</option><option value="four-person-escort">Four-person escort</option></select><button id="edit-preset" class="text-button" type="button">Edit a copy</button></div>
+          <button id="preset-menu" class="icon-button" aria-label="Reload canonical preset" title="Reload preset">↻</button>
+        </div>
+        <div class="scenario-meta">
+          <span class="status-chip"><i aria-hidden="true"></i><span id="scenario-status">Checking</span></span>
+          <span id="scenario-seed">Seed —</span>
+        </div>
+
+        <section class="rail-section">
+          <h2>Layers</h2>
+          <button class="layer-row is-selected" data-layer="actors"><span class="layer-icon actor-icon" aria-hidden="true"></span>Actors <span id="actor-count">0</span></button>
+          <button class="layer-row" data-layer="obstacles"><span class="layer-icon obstacle-icon" aria-hidden="true"></span>Obstacles <span id="obstacle-count">0</span></button>
+          <button class="layer-row" data-layer="exits"><span class="layer-icon exit-icon" aria-hidden="true"></span>Safe exits <span id="exit-count">0</span></button>
+          <button class="layer-row" data-layer="environment"><span class="layer-icon environment-icon" aria-hidden="true"></span>Environment <span id="environment-count">0</span></button>
+          <button class="layer-row" data-layer="navigation"><span class="layer-icon navigation-icon" aria-hidden="true"></span>Navigation <span id="navigation-count">0</span></button>
+          <button class="layer-row" data-layer="squads"><span class="layer-icon squad-icon" aria-hidden="true"></span>Squads <span id="squad-count">0</span></button>
+        </section>
+
+        <section class="rail-section actor-list-section">
+          <div class="section-heading"><h2>Actors</h2><button id="add-actor" class="text-button">+ Add</button></div>
+          <div id="actor-list" class="actor-list" role="listbox" aria-label="Scenario actors"></div>
+        </section>
+
+        <section class="rail-section timeline-setup">
+          <h2>Threat window</h2>
+          <label for="threat-tick">Ends at pulse <output id="threat-tick-output">—</output></label>
+          <input id="threat-tick" type="range" min="1" max="100" value="10">
+        </section>
+        <section class="rail-section environment-setup" aria-labelledby="environment-heading">
+          <div class="section-heading"><h2 id="environment-heading">Environment timeline</h2><span id="scheduled-count">0</span></div>
+          <label>Ambient light <output id="ambient-light-output">1.00</output><input id="ambient-light" type="range" min="0" max="1" step="0.05" value="1"></label>
+          <label>Ambient noise <output id="ambient-noise-output">0.00</output><input id="ambient-noise" type="range" min="0" max="1" step="0.05" value="0"></label>
+          <div class="timeline-event-controls"><label>Pulse<input id="environment-event-tick" type="number" min="1" value="1"></label><label>Change<select id="environment-event-kind"><option value="ambientLight">Light</option><option value="ambientNoise">Noise</option><option value="visibilityScale">Visibility</option></select></label><label>Value<input id="environment-event-value" type="number" min="0" max="1" step="0.05" value="0.5"></label></div>
+          <button id="add-environment-event" class="text-button" type="button">+ Add transition</button>
+          <ol id="scheduled-event-list" class="compact-list" aria-label="Scheduled environment transitions"></ol>
+        </section>
+        <section class="rail-section objectives-setup" aria-labelledby="objectives-heading">
+          <div class="section-heading"><h2 id="objectives-heading">Objectives</h2><span id="objective-count">0</span></div>
+          <div class="objective-actions"><button id="add-protect-objective" class="text-button" type="button">+ Protect</button><button id="add-separation-objective" class="text-button" type="button">+ Separation</button></div>
+          <ol id="objective-list" class="compact-list" aria-label="Scenario objectives"></ol>
+        </section>
+        <aside class="model-notice"><strong>Synthetic model</strong><p>Educational software—not training, legal advice, safety certification, or a predictor of real encounters.</p></aside>
+      </aside>
+
+      <section class="stage-panel" aria-labelledby="map-heading">
+        <div class="stage-toolbar">
+          <div>
+            <span class="eyebrow">Map editor</span>
+            <h2 id="map-heading">Crisis space</h2>
+          </div>
+          <div class="tool-group" role="toolbar" aria-label="Map tools">
+            <button class="tool is-active" data-tool="select" aria-pressed="true"><span aria-hidden="true">↖</span>Select</button>
+            <button class="tool" data-tool="pan" aria-pressed="false"><span aria-hidden="true">✥</span>Pan</button>
+            <button class="tool" data-tool="spawn" aria-pressed="false"><span aria-hidden="true">●</span>Spawn</button>
+            <button class="tool" data-tool="obstacle" aria-pressed="false"><span aria-hidden="true">▰</span>Barrier</button>
+            <button class="tool" data-tool="light" aria-pressed="false"><span aria-hidden="true">◉</span>Light</button>
+            <button class="tool" data-tool="noise" aria-pressed="false"><span aria-hidden="true">≋</span>Noise</button>
+            <button class="tool" data-tool="cover" aria-pressed="false"><span aria-hidden="true">◫</span>Cover</button>
+            <button class="tool" data-tool="navigation" aria-pressed="false"><span aria-hidden="true">◇</span>Nav</button>
+            <button class="tool" data-tool="exit" aria-pressed="false"><span aria-hidden="true">⇥</span>Exit</button>
+          </div>
+          <div class="zoom-group" aria-label="Map zoom">
+            <button id="zoom-out" class="icon-button" aria-label="Zoom out">−</button>
+            <output id="zoom-output">100%</output>
+            <button id="zoom-in" class="icon-button" aria-label="Zoom in">+</button>
+          </div>
+        </div>
+        <div class="arena-shell">
+          <svg id="arena" class="arena" role="img" aria-labelledby="arena-title arena-description" tabindex="0">
+            <title id="arena-title">Scenario map</title>
+            <desc id="arena-description">A non-graphic top-down map. Select actors with Tab or click. Arrow keys move the selected actor.</desc>
+            <defs>
+              <pattern id="grid-small" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="0.5"/></pattern>
+              <pattern id="grid-large" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="url(#grid-small)"/><path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" stroke-width="1"/></pattern>
+              <filter id="soft-shadow"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-opacity=".3"/></filter>
+            </defs>
+            <rect class="grid" width="100%" height="100%" fill="url(#grid-large)"/>
+            <g id="map-navigation" data-map-layer="navigation"></g><g id="map-environment" data-map-layer="environment"></g><g id="map-obstacles" data-map-layer="obstacles"></g><g id="map-exits" data-map-layer="exits"></g><g id="map-overlays" data-map-layer="overlays"></g><g id="map-routes" data-map-layer="routes"></g><g id="map-actors" data-map-layer="actors"></g>
+          </svg>
+          <div class="map-legend" aria-label="Map legend">
+            <span><i class="legend-dot protected"></i>Blue side</span>
+            <span><i class="legend-dot opposing"></i>Amber side</span>
+            <span><i class="legend-line"></i>Visible relation</span>
+          </div>
+          <p id="map-hint" class="map-hint">Select an actor to inspect policy and state.</p>
+        </div>
+        <div class="pulse-strip" aria-label="Scenario threat timeline">
+          <span>Pulse 0</span><div class="pulse-track"><svg viewBox="0 0 1000 15" preserveAspectRatio="none" aria-hidden="true"><rect class="pulse-track-base" x="0" y="5" width="1000" height="5" rx="2.5"></rect><rect id="threat-window" x="0" y="5" width="0" height="5" rx="2.5"></rect><line id="threat-marker" x1="0" x2="0" y1="0" y2="15"></line></svg></div><span id="max-pulse">Pulse —</span>
+        </div>
+      </section>
+
+      <aside class="rail inspector" aria-label="Inspector">
+        <div class="inspector-tabs" role="tablist" aria-label="Inspector sections">
+          <button id="tab-inspector" role="tab" aria-selected="true" aria-controls="inspector-panel">Inspector</button>
+          <button id="tab-json" role="tab" aria-selected="false" aria-controls="json-panel">JSON</button>
+        </div>
+        <div id="inspector-panel" role="tabpanel" aria-labelledby="tab-inspector">
+          <div id="actor-inspector-empty" class="empty-state"><span aria-hidden="true">◎</span><h2>No actor selected</h2><p>Choose an actor on the map or in the layer list.</p></div>
+          <form id="actor-inspector" hidden>
+            <div class="inspector-identity"><span id="actor-avatar" class="avatar">A</span><div><span class="eyebrow">Selected actor</span><h2 id="actor-name">Actor</h2><p id="actor-side">Side</p></div></div>
+            <fieldset><legend>Position</legend><div class="field-grid"><label>X metres<input id="actor-x" type="number" min="0" step="0.1"></label><label>Y metres<input id="actor-y" type="number" min="0" step="0.1"></label></div></fieldset>
+            <label>Policy<select id="actor-policy"><option value="safety-first">Safety first</option><option value="random-valid">Random valid</option><option value="sportive">Sportive baseline</option><option value="chen-inspired">Chen-inspired crisis</option><option value="human-intent">Human intent</option></select></label>
+            <label>Squad<select id="actor-squad"><option value="">No squad</option></select></label>
+            <fieldset><legend>State</legend><label>Readiness <output id="readiness-output"></output><input id="actor-readiness" aria-label="Readiness" type="range" min="0" max="1" step="0.05"></label><label>Resolve <output id="resolve-output"></output><input id="actor-resolve" aria-label="Resolve" type="range" min="0" max="1" step="0.05"></label><label>Initial fear <output id="fear-output"></output><input id="actor-fear" aria-label="Initial fear" type="range" min="0" max="1" step="0.05"></label></fieldset>
+            <button id="remove-actor" type="button" class="danger-button">Remove actor</button>
+          </form>
+        </div>
+        <div id="json-panel" role="tabpanel" aria-labelledby="tab-json" hidden>
+          <label for="json-source">Scenario source</label>
+          <textarea id="json-source" spellcheck="false" aria-describedby="json-help"></textarea>
+          <p id="json-help">Closed Schema 1.3 JSON. Changes validate after a short pause.</p>
+          <button id="apply-json" class="button button-primary">Apply JSON</button>
+        </div>
+        <section class="validation-panel" aria-labelledby="validation-heading">
+          <div class="section-heading"><h2 id="validation-heading">Preflight</h2><span id="validation-count">—</span></div>
+          <ul id="validation-list" aria-live="polite"></ul>
+        </section>
+      </aside>
+    </section>
+
+    <section class="replay-view" data-panel="replay" hidden aria-labelledby="replay-heading">
+      <div class="replay-header">
+        <div><span class="eyebrow">Deterministic replay</span><h1 id="replay-heading">No run loaded</h1><p id="replay-summary">Run a scenario to inspect every pulse.</p></div>
+        <div class="replay-actions"><label class="overlay-toggle"><input id="observation-overlay" type="checkbox"> Show observations and uncertainty</label><button id="branch-run" class="button button-ghost" disabled>Branch from pulse</button><button id="download-run" class="button button-ghost" disabled>Download replay</button></div>
+      </div>
+      <div class="replay-grid">
+        <section class="replay-stage" aria-label="Replay map"><svg id="replay-arena" class="arena" role="img" aria-label="Replay actor state map"></svg></section>
+        <aside class="event-panel"><div class="section-heading"><h2>Events</h2><select id="event-filter" aria-label="Filter replay events"><option value="all">All events</option><option value="decision">Decisions</option><option value="effect">Effects</option><option value="morale">Morale</option><option value="objective">Objectives</option></select></div><ol id="event-list"></ol></aside>
+        <aside class="why-panel"><span class="eyebrow">Explanation trace</span><h2>Why this action?</h2><div id="why-content" class="empty-state compact"><p>Select an actor or event at this pulse.</p></div></aside>
+      </div>
+      <div class="transport">
+        <button id="replay-start" class="icon-button" aria-label="Jump to first pulse">|◀</button><button id="replay-back" class="icon-button" aria-label="Previous pulse">◀</button><button id="replay-play" class="play-button" aria-label="Play replay">▶</button><button id="replay-forward" class="icon-button" aria-label="Next pulse">▶</button><button id="replay-end" class="icon-button" aria-label="Jump to last pulse">▶|</button>
+        <label for="replay-tick">Pulse <output id="replay-tick-output">0</output></label><input id="replay-tick" type="range" min="0" max="0" value="0"><select id="replay-speed" aria-label="Replay speed"><option value="1000">1×</option><option value="500">2×</option><option value="250">4×</option></select>
+      </div>
+    </section>
+
+    <section class="compare-view" data-panel="compare" hidden aria-labelledby="compare-heading">
+      <div class="compare-header"><div><span class="eyebrow">Paired experiment</span><h1 id="compare-heading">Policy comparison</h1><p>Hold mechanics and seeds constant. Change only the selected policy.</p></div><button id="run-comparison" class="button button-primary">Run paired comparison</button></div>
+      <div class="comparison-controls">
+        <label>Target actor<select id="compare-target"></select></label>
+        <label>Variant A<select id="compare-a"><option value="chen-inspired">Chen-inspired crisis</option><option value="sportive">Sportive baseline</option><option value="safety-first">Safety first</option></select></label>
+        <span aria-hidden="true">versus</span>
+        <label>Variant B<select id="compare-b"><option value="sportive">Sportive baseline</option><option value="chen-inspired">Chen-inspired crisis</option><option value="safety-first">Safety first</option></select></label>
+        <label>Seeds<input id="compare-seeds" type="text" value="101, 102, 103, 104" aria-describedby="seed-help comparison-estimate"></label><small id="seed-help">Comma-separated paired seeds · <output id="comparison-estimate">8 episodes · up to 96 pulses</output></small>
+      </div>
+      <div id="comparison-results" class="comparison-results" aria-live="polite">
+        <div class="empty-state"><span aria-hidden="true">≍</span><h2>No comparison yet</h2><p>Run paired seeds to compare synthetic model outputs and action distributions.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="busy-overlay" class="busy-overlay" hidden><div><span class="spinner" aria-hidden="true"></span><strong id="busy-title">Running simulation</strong><p id="busy-detail">The durable worker is resolving pulses.</p><button id="cancel-job" class="button button-ghost" type="button" hidden>Cancel experiment</button></div></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

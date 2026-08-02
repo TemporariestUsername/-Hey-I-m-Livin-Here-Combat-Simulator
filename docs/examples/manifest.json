@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "release": "1.0.0",
+  "engineVersion": "0.4.0",
+  "examples": [
+    {
+      "file": "threat-ends-run-v1.json",
+      "kind": "run-log",
+      "scenarioId": "threat-ends",
+      "scenarioHash": "b2a12a94af661c8dbc36e31f134db435dbcd6e2954bbf35a6d24765bb3f5ecb1",
+      "artifactHash": "336cdc66b00d845a53effa46361707493db131429477f38dc1c2a4087a859dca",
+      "finalChecksum": "498e2821f8d0c99926e7fbc556757a6333145151b655397c21b45ada6c46103d"
+    }
+  ],
+  "limitations": "Synthetic game-model artifact; not training, legal advice, safety certification, or a predictor of real encounters."
+}

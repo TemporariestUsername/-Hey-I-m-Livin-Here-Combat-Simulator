@@ -1,16 +1,32 @@
-# ADR 0005: Numeric precision and comparison boundaries
+# ADR 0005: Numeric precision and persisted normalization
 
 - **Status:** accepted
-- **Date:** 2026-07-29
+- **Decision date:** 2026-07-29
 - **Owner:** engine maintainers
 - **Risk:** high
 
+## Context
+
+JavaScript uses IEEE-754 binary64 numbers. Uncontrolled derived fractions, negative zero, and inconsistent local rounding make checksums and boundary behavior fragile.
+
 ## Decision
 
-The engine uses JavaScript `number` values only for finite, schema-bounded quantities and `bigint` only inside PCG32. Persisted derived scalar state and trace terms are rounded to six decimal places with `Number(value.toFixed(6))`. Positions are metres, time is integer milliseconds, angles are degrees normalized to the inclusive authoring range 0–360, and normalized actor attributes use 0–1. Calculations compare rounded derived values at rule boundaries; exact threshold equality is eligible. Checksums cover the rounded persisted representation, never an unrounded intermediate.
+- Use binary64 for in-pulse calculations and integers for ticks, sequence numbers, seeds, and elapsed milliseconds.
+- Normalize every finite number entering persisted engine state or an event payload to six decimal places with round-half-away-from-zero.
+- Canonicalize `-0` to `0` and reject non-finite persisted values.
+- Normalize scenario-authored numeric values when they enter a run artifact and initial state. The source file remains the authored record outside the engine; the run log contains its normalized executable representation.
+- Normalize actor positions whether movement succeeds, is clamped, or is blocked. Compute collision and policy decisions from normalized state.
+- Apply comparison thresholds to unrounded calculation values unless a formula specification explicitly says otherwise. Every new threshold needs below/equal/above tests, and every bounded curve needs edge tests.
+- Compute event and state checksums only after normalization.
 
-Geometry may use ECMAScript arithmetic, including `Math.hypot`, but only rounded positions may enter persisted state. Introducing a different precision, rounding point, numeric runtime, or comparison convention requires an engine-version change and refreshed golden evidence.
+## Alternatives considered
 
-## Consequence
+Fixed-point integers everywhere were deferred because current units and formulas do not require their added conversion complexity. Unrounded binary64 persistence and scattered `toFixed` calls were rejected because they do not establish one compatibility boundary.
 
-Golden formula tests must cover values below, equal to, and above thresholds. Replay and actor-order tests must compare persisted values and checksums. Validators reject non-finite values before the engine executes.
+## Consequences and evidence
+
+`packages/engine/src/numeric.ts` is the only persisted-number normalizer. Tests cover positive and negative half units, very small values, negative zero, non-finite rejection, scenario ingestion, stamina, map edges, and blocked movement. Changing precision or rounding mode is an engine compatibility break.
+
+## Review trigger
+
+Review before adding angular state, trigonometric state persistence, tempo/interrupt thresholds, accumulated energy, physics integration, native/WASM math, or fixed-point storage.

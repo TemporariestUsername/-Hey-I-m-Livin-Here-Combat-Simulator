@@ -1,7 +1,7 @@
-import type { Point, Rectangle } from "../../schema/src/index.ts";
+import type { EnvironmentZone, NavigationArea, Point, Rectangle } from "../../schema/src/index.ts";
+import { persistedPoint } from "./numeric.ts";
 
 const EPSILON = 1e-9;
-const persisted = (value: number): number => Number(value.toFixed(6));
 
 export function distance(a: Point, b: Point): number {
   return Math.hypot(b.x - a.x, b.y - a.y);
@@ -59,12 +59,42 @@ export function isInsideMap(point: Point, map: { width: number; height: number }
   return point.x >= 0 && point.x <= map.width && point.y >= 0 && point.y <= map.height;
 }
 
+export function pointInsideRectangle(point: Point, rectangle: Pick<Rectangle, "x" | "y" | "width" | "height">): boolean {
+  return point.x >= rectangle.x && point.x <= rectangle.x + rectangle.width &&
+    point.y >= rectangle.y && point.y <= rectangle.y + rectangle.height;
+}
+
+export function environmentValueAt(point: Point, zones: readonly EnvironmentZone[] | undefined,
+  kind: EnvironmentZone["kind"], fallback: number): number {
+  const matches = (zones ?? []).filter(zone => zone.kind === kind && pointInsideRectangle(point, zone));
+  if (matches.length === 0) return fallback;
+  return matches.reduce((sum, zone) => sum + zone.value, 0) / matches.length;
+}
+
+export function isNavigable(point: Point, map: { width: number; height: number; navigableAreas?: NavigationArea[] }): boolean {
+  return isInsideMap(point, map) && ((map.navigableAreas?.length ?? 0) === 0 ||
+    map.navigableAreas!.some(area => pointInsideRectangle(point, area)));
+}
+
+function pathIsNavigable(start: Point, end: Point, map: { width: number; height: number; navigableAreas?: NavigationArea[] }): boolean {
+  if (!isNavigable(start, map) || !isNavigable(end, map)) return false;
+  if ((map.navigableAreas?.length ?? 0) === 0) return true;
+  const samples = Math.max(1, Math.min(4096, Math.ceil(distance(start, end) / 0.2)));
+  for (let index = 1; index < samples; index += 1) {
+    const ratio = index / samples;
+    if (!isNavigable({ x: start.x + (end.x - start.x) * ratio, y: start.y + (end.y - start.y) * ratio }, map)) return false;
+  }
+  return true;
+}
+
 /** Rejects a complete movement when its swept path crosses a blocking obstacle. */
-export function resolveMovement(start: Point, proposed: Point, map: { width: number; height: number; obstacles?: Rectangle[] }): Point {
-  const bounded = {
-    x: persisted(Math.min(map.width, Math.max(0, proposed.x))),
-    y: persisted(Math.min(map.height, Math.max(0, proposed.y))),
-  };
+export function resolveMovement(start: Point, proposed: Point,
+  map: { width: number; height: number; obstacles?: Rectangle[]; navigableAreas?: NavigationArea[] }): Point {
+  const normalizedStart = persistedPoint(start);
+  const bounded = persistedPoint({
+    x: Math.min(map.width, Math.max(0, proposed.x)),
+    y: Math.min(map.height, Math.max(0, proposed.y)),
+  });
   const blocked = (map.obstacles ?? []).some(obstacle => obstacle.blocksMovement !== false && segmentIntersectsRectangle(start, bounded, obstacle));
-  return blocked ? { ...start } : bounded;
+  return blocked || !pathIsNavigable(start, bounded, map) ? normalizedStart : bounded;
 }

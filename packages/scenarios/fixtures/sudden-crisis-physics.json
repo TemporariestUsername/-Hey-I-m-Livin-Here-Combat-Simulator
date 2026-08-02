@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "sudden-crisis-physics",
+  "name": "Sudden close-range crisis with abstract physical effects",
+  "seed": 9,
+  "pulseMs": 100,
+  "maxTicks": 20,
+  "map": {
+    "width": 12, "height": 10,
+    "navigableAreas": [{ "id": "short-horizon", "x": 3.5, "y": 3, "width": 5, "height": 4 }],
+    "environmentZones": [{ "id": "dim-corner", "kind": "light", "x": 3.5, "y": 3, "width": 5, "height": 4, "value": 0.3 }]
+  },
+  "environment": { "ambientLight": 0.3, "ambientNoise": 0.65, "visibilityScale": 0.7 },
+  "scheduledEvents": [{ "id": "visibility-recovers", "tick": 4, "kind": "environment", "ambientLight": 0.55, "ambientNoise": 0.4, "visibilityScale": 0.85 }],
+  "threat": { "active": true, "severity": 0.9, "immediacy": 1, "retreatAvailable": false, "threatenedActorIds": ["crisis-defender"] },
+  "rules": {
+    "physics": {
+      "enabled": true,
+      "interruptMargin": 0.15,
+      "tempoNoise": 0,
+      "contactNoise": 0,
+      "recoveryPerPulse": 0.03,
+      "impairmentRecoveryPerPulse": 0.003,
+      "separationScaleM": 0.1,
+      "neutralizationThreshold": 0.72
+    }
+  },
+  "objectives": [
+    { "id": "end-immediate-threat", "kind": "neutralize-side", "side": "threat" }
+  ],
+  "terminalConditions": [
+    { "kind": "objective-complete", "objectiveId": "end-immediate-threat" },
+    { "kind": "side-neutralized", "side": "threat" }
+  ],
+  "actors": [
+    {
+      "id": "crisis-defender",
+      "side": "protected",
+      "position": { "x": 5, "y": 5 },
+      "facingDegrees": 0,
+      "visionRange": 8,
+      "visionArcDegrees": 180,
+      "movementSpeed": 1.6,
+      "massKg": 80,
+      "radiusM": 0.3,
+      "skill": 0.9,
+      "balance": 0.9,
+      "guard": 0.7,
+      "mobility": 0.95,
+      "surprise": 0.9,
+      "reachM": 1,
+      "protection": 0.1,
+      "stance": "committed",
+      "readiness": 0.95,
+      "stamina": 1,
+      "resolve": 0.9,
+      "threatened": true,
+      "attention": 0.9,
+      "hearingRangeM": 8,
+      "soundSignature": 0.45,
+      "role": "protected-defender",
+      "tool": { "id": "defensive-barrier", "class": "barrier", "reachM": 0.15, "readiness": 0.8, "concealment": 0.1, "durability": 0.9, "defensiveUtility": 0.7, "intimidation": 0.05 },
+      "policyId": "random-valid"
+    },
+    {
+      "id": "immediate-threat",
+      "side": "threat",
+      "position": { "x": 5.8, "y": 5 },
+      "facingDegrees": 0,
+      "visionRange": 8,
+      "visionArcDegrees": 180,
+      "movementSpeed": 1.2,
+      "massKg": 70,
+      "radiusM": 0.3,
+      "skill": 0.5,
+      "balance": 0.6,
+      "guard": 0.3,
+      "mobility": 0.75,
+      "surprise": 0,
+      "reachM": 0.8,
+      "protection": 0,
+      "stance": "neutral",
+      "readiness": 0.4,
+      "stamina": 0.9,
+      "resolve": 0.5,
+      "threatened": true,
+      "attention": 0.75,
+      "hearingRangeM": 8,
+      "soundSignature": 0.7,
+      "role": "immediate-pressure",
+      "policyId": "random-valid"
+    }
+  ]
+}

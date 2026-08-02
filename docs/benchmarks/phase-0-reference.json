@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordedAt": "2026-08-02",
+  "engineVersion": "0.4.0",
+  "scenarioSchemaVersion": "1.3.0",
+  "fixture": "benchmarks/fixtures/benchmark-32-actors.json",
+  "actors": 32,
+  "pulses": 600,
+  "physicsEnabled": true,
+  "samples": 10,
+  "warmups": 1,
+  "eventCount": 78077,
+  "traceCount": 19200,
+  "artifactHash": "afeb3d21118de64536f642c3aac1d5d9c0f1aa22cdc4ae7cd6213fb42df43bad",
+  "finalChecksum": "aeb1ce074b0e40c1d9893bf134c257871ffb971986c760975aca5d058c68d512",
+  "medianMs": 932.145,
+  "p95Ms": 948.659,
+  "minMs": 912.365,
+  "maxMs": 948.659,
+  "phase2TargetMs": 1000,
+  "sameEnvironmentRegressionThresholdMs": 1300,
+  "budgetMet": true,
+  "environment": {
+    "node": "v22.22.1",
+    "platform": "darwin",
+    "release": "24.6.0",
+    "architecture": "arm64",
+    "cpu": "Apple M3 Max"
+  },
+  "methodology": "One warm-up followed by 10 independent full Engine 0.4 runs; nearest-rank median and p95. Full artifact hash, event count, trace count, and final checksum agreed in every run.",
+  "uncertainty": "Observed range was 36.294 ms (3.89% of median). Timing comparisons apply only to the same environment; artifact identity is cross-platform. Engine 0.4 meets the 1,000 ms Phase 2 target and remains inside the separate 1,300 ms same-environment regression ceiling."
+}

@@ -1,52 +1,74 @@
-export const SCHEMA_VERSION = "1.0.0" as const;
+import { SCHEMA_VERSION, type ActorSpec, type Point } from "./scenario-types.generated.ts";
+export { SCHEMA_VERSION };
+export type {
+  AbstractToolSpec, ActorSpec, EngagementRules, EnvironmentSpec, EnvironmentZone, ExitZone,
+  MoraleRules, NavigationArea, ObjectiveSpec, PhysicsRules, Point, Rectangle,
+  ScenarioSpec, ScheduledEventSpec, SquadSpec, TerminalConditionSpec,
+} from "./scenario-types.generated.ts";
 
 export type ActionKind =
   | "observe" | "communicate" | "reposition" | "protect" | "withdraw"
   | "ready-tool" | "commit" | "aid-ally" | "rally" | "wait";
 
-export interface Point { x: number; y: number }
-
-export interface Rectangle {
-  id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  blocksVision?: boolean;
-  blocksMovement?: boolean;
-}
-
-export interface ActorSpec {
-  id: string;
-  side: string;
-  position: Point;
-  facingDegrees?: number;
-  visionRange?: number;
-  visionArcDegrees?: number;
-  movementSpeed?: number;
-  readiness: number;
-  stamina: number;
-  resolve: number;
-  threatened?: boolean;
-  policyId?: "safety-first" | "random-valid";
-}
-
-export interface ScenarioSpec {
-  schemaVersion: typeof SCHEMA_VERSION;
-  id: string;
-  name: string;
-  seed: number;
-  pulseMs: 100;
-  maxTicks: number;
-  map: { width: number; height: number; obstacles?: Rectangle[] };
-  threat: { active: boolean; endsAtTick?: number };
-  actors: ActorSpec[];
+export interface ActionIntent {
+  action: ActionKind;
+  actorId: string;
+  targetActorId?: string;
+  targetPoint?: Point;
+  commitment: number;
+  protectiveSubjectId?: string;
+  rationale: string;
 }
 
 export interface ActorState extends ActorSpec {
   active: boolean;
   intent: ActionKind;
   shock: number;
+  balance: number;
+  guard: number;
+  mobility: number;
+  impairment: number;
+  disruption: number;
+  recoveryTicks: number;
+  neutralized: boolean;
+  fear: number;
+  moraleState: "steady" | "shaken" | "frozen" | "routing" | "recovering";
+  escaped: boolean;
+  routeExitId?: string;
+  awareness: number;
+  memoryActorIds: string[];
+  memoryAges: Record<string, number>;
+  toolReady: number;
+  toolAvailable: boolean;
+  engagementHeadroom: number;
+}
+
+export interface EnvironmentState {
+  ambientLight: number;
+  ambientNoise: number;
+  visibilityScale: number;
+}
+
+export interface RandomStreamState {
+  state: string;
+  increment: string;
+  draws: number;
+}
+
+export interface RandomStreamsState {
+  sensing: RandomStreamState;
+  movement: RandomStreamState;
+  contact: RandomStreamState;
+  morale: RandomStreamState;
+  policy: RandomStreamState;
+}
+
+export interface SquadState {
+  id: string;
+  side: string;
+  leaderId?: string;
+  cohesion: number;
+  routedCount: number;
 }
 
 export interface SimulationState {
@@ -56,17 +78,51 @@ export interface SimulationState {
   elapsedMs: number;
   threatActive: boolean;
   done: boolean;
+  terminalReason?: string;
+  objectiveProgress: Record<string, boolean>;
+  squads: SquadState[];
   actors: ActorState[];
+  environment: EnvironmentState;
+  randomStreams: RandomStreamsState;
 }
 
 export interface SimulationEvent {
   schemaVersion: typeof SCHEMA_VERSION;
   sequence: number;
   tick: number;
-  type: "simulation-started" | "threat-ended" | "observation-built" | "policy-decided" | "intent-gated" | "intent-resolved" | "tempo-resolved" | "interrupt-resolved" | "movement-resolved" | "simulation-ended";
+  type:
+    | "simulation-started" | "threat-ended" | "observation-built" | "policy-decided"
+    | "intent-gated" | "intent-resolved" | "movement-resolved"
+    | "tempo-resolved" | "contact-resolved" | "effects-applied" | "recovery-applied"
+    | "morale-signal" | "morale-updated" | "squad-updated" | "route-progress"
+    | "objective-updated" | "terminal-reached" | "simulation-ended"
+    | "environment-changed" | "action-resolved" | "tool-state-changed";
   payload: Record<string, unknown>;
   priorChecksum: string;
   checksum: string;
+}
+
+export interface TraceRecord {
+  schemaVersion: typeof SCHEMA_VERSION;
+  tick: number;
+  actorId: string;
+  visibleActorIds: string[];
+  heardActorIds: string[];
+  rememberedActorIds: string[];
+  observationUncertainty: number;
+  selectedAction: ActionKind;
+  formulaTerms: Record<string, number>;
+  randomSamples: number[];
+  effectPacketIds: string[];
+  actorStateChecksum: string;
+  gatePredicates: Record<string, boolean>;
+}
+
+export interface RunSnapshot {
+  tick: number;
+  state: SimulationState;
+  eventSequence: number;
+  traceCount: number;
 }
 
 export interface RunLog {
@@ -75,6 +131,20 @@ export interface RunLog {
   scenario: ScenarioSpec;
   initialState: SimulationState;
   events: SimulationEvent[];
+  traces: TraceRecord[];
+  snapshots: RunSnapshot[];
   finalState: SimulationState;
   finalChecksum: string;
+}
+
+export interface SimulationContinuation {
+  schemaVersion: "1.0.0";
+  engineVersion: string;
+  scenario: ScenarioSpec;
+  initialState: SimulationState;
+  state: SimulationState;
+  events: SimulationEvent[];
+  traces: TraceRecord[];
+  snapshots: RunSnapshot[];
+  checksum: string;
 }

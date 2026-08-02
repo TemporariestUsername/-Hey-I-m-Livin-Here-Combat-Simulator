@@ -1,0 +1,2621 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-08-02T00:00:00.000Z",
+  "generator": "scripts/run-calibration.ts",
+  "engineVersion": "0.4.0",
+  "policies": [
+    {
+      "id": "chen-inspired",
+      "version": "1.2.0",
+      "configurationHash": "c097fafdff13c7e374bafee188cfadc74541b7c2cf394ee18ce8ef0cdadf22aa",
+      "weights": {
+        "asymmetry": {
+          "value": 0.42,
+          "provenance": "reference-derived",
+          "note": "Commit-score coefficient for surprise/committed asymmetry."
+        },
+        "readiness": {
+          "value": 0.22,
+          "provenance": "assumed",
+          "note": "Commit-score readiness coefficient."
+        },
+        "mobility": {
+          "value": 0.12,
+          "provenance": "inferred",
+          "note": "Commit-score coefficient for continued angle-changing capacity."
+        },
+        "groupOpportunity": {
+          "value": 0.14,
+          "provenance": "reference-derived",
+          "note": "Abstract group-shock opportunity coefficient."
+        },
+        "resolve": {
+          "value": 0.1,
+          "provenance": "assumed",
+          "note": "Commit/protect resolve coefficient."
+        },
+        "symmetricDuelTolerance": {
+          "value": 0.15,
+          "provenance": "reference-derived",
+          "note": "Encodes the documented formal-duel mismatch."
+        },
+        "symmetricDuelPenalty": {
+          "value": 0.38,
+          "provenance": "reference-derived",
+          "note": "Commit penalty in a low-surprise symmetric exchange."
+        },
+        "shockPenalty": {
+          "value": 0.28,
+          "provenance": "assumed",
+          "note": "Commit penalty from current shock."
+        },
+        "impairmentPenalty": {
+          "value": 0.25,
+          "provenance": "assumed",
+          "note": "Commit penalty from current impairment."
+        },
+        "withdrawalBase": {
+          "value": 0.3,
+          "provenance": "assumed",
+          "note": "Active-threat withdrawal baseline."
+        },
+        "withdrawalSymmetry": {
+          "value": 0.35,
+          "provenance": "inferred",
+          "note": "Withdrawal contribution in a symmetric duel."
+        },
+        "withdrawalShock": {
+          "value": 0.25,
+          "provenance": "assumed",
+          "note": "Withdrawal contribution from shock."
+        },
+        "withdrawalImpairment": {
+          "value": 0.3,
+          "provenance": "assumed",
+          "note": "Withdrawal contribution from impairment."
+        },
+        "protectBase": {
+          "value": 0.27,
+          "provenance": "calibrated",
+          "note": "Active-threat protection baseline reduced to keep one term below the predeclared 60% contribution ceiling."
+        },
+        "protectLowSurprise": {
+          "value": 0.16,
+          "provenance": "inferred",
+          "note": "Protection contribution when asymmetry is absent."
+        },
+        "observeNoRisk": {
+          "value": 0.5,
+          "provenance": "assumed",
+          "note": "Observation score when no actor is visible."
+        },
+        "disengageAfterThreat": {
+          "value": 1,
+          "provenance": "reference-derived",
+          "note": "Sharp post-threat disengagement."
+        }
+      }
+    },
+    {
+      "id": "sportive",
+      "version": "1.1.0",
+      "configurationHash": "4f137f6a9a589dc5e1eb6600798cabd2ccc0b6c2f705ea875f2157fedf90b569",
+      "weights": {
+        "sustainedExchange": {
+          "value": 0.45,
+          "provenance": "assumed",
+          "note": "Commit-score coefficient for continued symmetric engagement."
+        },
+        "readiness": {
+          "value": 0.3,
+          "provenance": "assumed",
+          "note": "Commit-score readiness coefficient."
+        },
+        "stamina": {
+          "value": 0.25,
+          "provenance": "assumed",
+          "note": "Commit-score stamina coefficient."
+        },
+        "shockPenalty": {
+          "value": 0.25,
+          "provenance": "assumed",
+          "note": "Commit penalty and withdrawal contribution."
+        },
+        "impairmentWithdrawal": {
+          "value": 0.35,
+          "provenance": "assumed",
+          "note": "Withdrawal contribution from current impairment."
+        },
+        "withdrawalBase": {
+          "value": 0.2,
+          "provenance": "assumed",
+          "note": "Active-threat withdrawal baseline."
+        },
+        "observeNoRisk": {
+          "value": 0.45,
+          "provenance": "assumed",
+          "note": "Observation score when no actor is visible."
+        },
+        "disengageAfterThreat": {
+          "value": 1,
+          "provenance": "reference-derived",
+          "note": "Shared safety gate and legal boundary."
+        }
+      }
+    }
+  ],
+  "cohort": {
+    "count": 64,
+    "seeds": [
+      10000,
+      10137,
+      10274,
+      10411,
+      10548,
+      10685,
+      10822,
+      10959,
+      11096,
+      11233,
+      11370,
+      11507,
+      11644,
+      11781,
+      11918,
+      12055,
+      12192,
+      12329,
+      12466,
+      12603,
+      12740,
+      12877,
+      13014,
+      13151,
+      13288,
+      13425,
+      13562,
+      13699,
+      13836,
+      13973,
+      14110,
+      14247,
+      14384,
+      14521,
+      14658,
+      14795,
+      14932,
+      15069,
+      15206,
+      15343,
+      15480,
+      15617,
+      15754,
+      15891,
+      16028,
+      16165,
+      16302,
+      16439,
+      16576,
+      16713,
+      16850,
+      16987,
+      17124,
+      17261,
+      17398,
+      17535,
+      17672,
+      17809,
+      17946,
+      18083,
+      18220,
+      18357,
+      18494,
+      18631
+    ],
+    "pairing": "same scenario and seed; only the named target actor policy changes"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "open-regulated-duel",
+      "fixture": "open-regulated-duel.json",
+      "scenarioHash": "66f5362dbd23a4eca8e5b215298e56fbe92dc555aa392054e114c3dbef3dbadd",
+      "targetActorId": "blue-reference",
+      "actionDistribution": {
+        "chen": {
+          "commit": 0,
+          "withdraw": 768,
+          "protect": 0
+        },
+        "sportive": {
+          "commit": 704,
+          "withdraw": 64,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 11,
+            "median": 11,
+            "p05": 11,
+            "p95": 11
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 11,
+            "meanDifference": -11,
+            "medianDifference": -11,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": -11,
+              "high": -11
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 12,
+            "median": 12,
+            "p05": 12,
+            "p95": 12
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 12,
+            "rightMean": 1,
+            "meanDifference": 11,
+            "medianDifference": 11,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 11,
+              "high": 11
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 3.1875,
+            "median": 3,
+            "p05": 2,
+            "p95": 5
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 3.1875,
+            "meanDifference": -3.1875,
+            "medianDifference": -3,
+            "pairedStandardizedEffect": -3.168695,
+            "bootstrap95": {
+              "low": -3.453125,
+              "high": -2.953125
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 3.1875,
+            "median": 3,
+            "p05": 2,
+            "p95": 5
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 3.1875,
+            "meanDifference": -2.1875,
+            "medianDifference": -2,
+            "pairedStandardizedEffect": -2.174594,
+            "bootstrap95": {
+              "low": -2.4375,
+              "high": -1.96875
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0.21617,
+            "median": 0.201481,
+            "p05": 0.142211,
+            "p95": 0.320337
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0.21617,
+            "meanDifference": -0.21617,
+            "medianDifference": -0.201481,
+            "pairedStandardizedEffect": -3.476149,
+            "bootstrap95": {
+              "low": -0.231815,
+              "high": -0.201539
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0.07126,
+            "median": 0.073817,
+            "p05": 0.017063,
+            "p95": 0.123082
+          },
+          "sportive": {
+            "mean": 0.207865,
+            "median": 0.215444,
+            "p05": 0.124751,
+            "p95": 0.299888
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.07126,
+            "rightMean": 0.207865,
+            "meanDifference": -0.136605,
+            "medianDifference": -0.148554,
+            "pairedStandardizedEffect": -2.092254,
+            "bootstrap95": {
+              "low": -0.152348,
+              "high": -0.12095
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 12,
+            "median": 12,
+            "p05": 12,
+            "p95": 12
+          },
+          "sportive": {
+            "mean": 12,
+            "median": 12,
+            "p05": 12,
+            "p95": 12
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 12,
+            "rightMean": 12,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenarioId": "sudden-crisis-physics",
+      "fixture": "sudden-crisis-physics.json",
+      "scenarioHash": "6d340e4496a2520a243356d1a5379359a5f0cc7562d41c53ed79ba13bc69bca7",
+      "targetActorId": "crisis-defender",
+      "actionDistribution": {
+        "chen": {
+          "commit": 64,
+          "withdraw": 0,
+          "protect": 0
+        },
+        "sportive": {
+          "commit": 64,
+          "withdraw": 0,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0.826661,
+            "median": 0.826661,
+            "p05": 0.826661,
+            "p95": 0.826661
+          },
+          "sportive": {
+            "mean": 0.826661,
+            "median": 0.826661,
+            "p05": 0.826661,
+            "p95": 0.826661
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.826661,
+            "rightMean": 0.826661,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenarioId": "morale-cascade-1v3",
+      "fixture": "morale-cascade-1v3.json",
+      "scenarioHash": "3986bb6929535afd2ea32fa4b419d79d7977e4b0199ac554a543f547ce9915ec",
+      "targetActorId": "blue-one",
+      "actionDistribution": {
+        "chen": {
+          "commit": 576,
+          "withdraw": 64,
+          "protect": 0
+        },
+        "sportive": {
+          "commit": 576,
+          "withdraw": 64,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 9,
+            "median": 9,
+            "p05": 9,
+            "p95": 9
+          },
+          "sportive": {
+            "mean": 9,
+            "median": 9,
+            "p05": 9,
+            "p95": 9
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 9,
+            "rightMean": 9,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0.726244,
+            "median": 0.726244,
+            "p05": 0.726244,
+            "p95": 0.726244
+          },
+          "sportive": {
+            "mean": 0.726244,
+            "median": 0.726244,
+            "p05": 0.726244,
+            "p95": 0.726244
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.726244,
+            "rightMean": 0.726244,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 12,
+            "median": 12,
+            "p05": 12,
+            "p95": 12
+          },
+          "sportive": {
+            "mean": 12,
+            "median": 12,
+            "p05": 12,
+            "p95": 12
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 12,
+            "rightMean": 12,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 2,
+            "median": 2,
+            "p05": 2,
+            "p95": 2
+          },
+          "sportive": {
+            "mean": 2,
+            "median": 2,
+            "p05": 2,
+            "p95": 2
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 2,
+            "rightMean": 2,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 10,
+            "median": 10,
+            "p05": 10,
+            "p95": 10
+          },
+          "sportive": {
+            "mean": 10,
+            "median": 10,
+            "p05": 10,
+            "p95": 10
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 10,
+            "rightMean": 10,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenarioId": "threat-ends",
+      "fixture": "threat-ends.json",
+      "scenarioHash": "b2a12a94af661c8dbc36e31f134db435dbcd6e2954bbf35a6d24765bb3f5ecb1",
+      "targetActorId": "defender",
+      "actionDistribution": {
+        "chen": {
+          "commit": 64,
+          "withdraw": 0,
+          "protect": 0
+        },
+        "sportive": {
+          "commit": 64,
+          "withdraw": 0,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0.588767,
+            "median": 0.588767,
+            "p05": 0.588767,
+            "p95": 0.588767
+          },
+          "sportive": {
+            "mean": 0.588767,
+            "median": 0.588767,
+            "p05": 0.588767,
+            "p95": 0.588767
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.588767,
+            "rightMean": 0.588767,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenarioId": "crowd-broken-sightlines",
+      "fixture": "crowd-broken-sightlines.json",
+      "scenarioHash": "bd1c5bd2b7f9319675f1aff3c8ce5b997c9a8b43c2433b021ddbb5483480a297",
+      "targetActorId": "blue-focus",
+      "actionDistribution": {
+        "chen": {
+          "commit": 777,
+          "withdraw": 66,
+          "protect": 309
+        },
+        "sportive": {
+          "commit": 777,
+          "withdraw": 375,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 12.140625,
+            "median": 12,
+            "p05": 11,
+            "p95": 13.85
+          },
+          "sportive": {
+            "mean": 12.140625,
+            "median": 12,
+            "p05": 11,
+            "p95": 13.85
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 12.140625,
+            "rightMean": 12.140625,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 1.03125,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 5.859375,
+            "median": 6,
+            "p05": 4.15,
+            "p95": 7
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1.03125,
+            "rightMean": 5.859375,
+            "meanDifference": -4.828125,
+            "medianDifference": -5,
+            "pairedStandardizedEffect": -5.468479,
+            "bootstrap95": {
+              "low": -5.03125,
+              "high": -4.625
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 4.828125,
+            "median": 5,
+            "p05": 3,
+            "p95": 6
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 4.828125,
+            "rightMean": 0,
+            "meanDifference": 4.828125,
+            "medianDifference": 5,
+            "pairedStandardizedEffect": 5.468479,
+            "bootstrap95": {
+              "low": 4.625,
+              "high": 5.03125
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 18,
+            "median": 18,
+            "p05": 18,
+            "p95": 18
+          },
+          "sportive": {
+            "mean": 18,
+            "median": 18,
+            "p05": 18,
+            "p95": 18
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 18,
+            "rightMean": 18,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenarioId": "four-person-escort",
+      "fixture": "four-person-escort.json",
+      "scenarioHash": "e25d51e8d25feeefc4b7f49776c2a359ba957df7efd41995c0e788f47f9aef16",
+      "targetActorId": "escort-lead",
+      "actionDistribution": {
+        "chen": {
+          "commit": 960,
+          "withdraw": 64,
+          "protect": 0
+        },
+        "sportive": {
+          "commit": 960,
+          "withdraw": 64,
+          "protect": 0
+        }
+      },
+      "metrics": {
+        "objectiveCount": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "commitActions": {
+          "chen": {
+            "mean": 15,
+            "median": 15,
+            "p05": 15,
+            "p95": 15
+          },
+          "sportive": {
+            "mean": 15,
+            "median": 15,
+            "p05": 15,
+            "p95": 15
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 15,
+            "rightMean": 15,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "withdrawActions": {
+          "chen": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "sportive": {
+            "mean": 1,
+            "median": 1,
+            "p05": 1,
+            "p95": 1
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1,
+            "rightMean": 1,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "protectActions": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsInflicted": {
+          "chen": {
+            "mean": 1.5625,
+            "median": 2,
+            "p05": 1,
+            "p95": 2
+          },
+          "sportive": {
+            "mean": 1.5625,
+            "median": 2,
+            "p05": 1,
+            "p95": 2
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 1.5625,
+            "rightMean": 1.5625,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "contactsReceived": {
+          "chen": {
+            "mean": 0.859375,
+            "median": 1,
+            "p05": 0,
+            "p95": 2
+          },
+          "sportive": {
+            "mean": 0.859375,
+            "median": 1,
+            "p05": 0,
+            "p95": 2
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.859375,
+            "rightMean": 0.859375,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityInflicted": {
+          "chen": {
+            "mean": 0.482742,
+            "median": 0.436738,
+            "p05": 0.240923,
+            "p95": 0.762233
+          },
+          "sportive": {
+            "mean": 0.482742,
+            "median": 0.436738,
+            "p05": 0.240923,
+            "p95": 0.762233
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.482742,
+            "rightMean": 0.482742,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "totalSeverityReceived": {
+          "chen": {
+            "mean": 0.13942,
+            "median": 0.131412,
+            "p05": 0,
+            "p95": 0.310838
+          },
+          "sportive": {
+            "mean": 0.13942,
+            "median": 0.131412,
+            "p05": 0,
+            "p95": 0.310838
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0.13942,
+            "rightMean": 0.13942,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "moraleSignals": {
+          "chen": {
+            "mean": 39.375,
+            "median": 36,
+            "p05": 24,
+            "p95": 72
+          },
+          "sportive": {
+            "mean": 39.375,
+            "median": 36,
+            "p05": 24,
+            "p95": 72
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 39.375,
+            "rightMean": 39.375,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "maximumCascadeDepth": {
+          "chen": {
+            "mean": 2,
+            "median": 2,
+            "p05": 2,
+            "p95": 2
+          },
+          "sportive": {
+            "mean": 2,
+            "median": 2,
+            "p05": 2,
+            "p95": 2
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 2,
+            "rightMean": 2,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "postThreatCommitments": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetNeutralized": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "targetEscaped": {
+          "chen": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "sportive": {
+            "mean": 0,
+            "median": 0,
+            "p05": 0,
+            "p95": 0
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 0,
+            "rightMean": 0,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        },
+        "ticks": {
+          "chen": {
+            "mean": 16,
+            "median": 16,
+            "p05": 16,
+            "p95": 16
+          },
+          "sportive": {
+            "mean": 16,
+            "median": 16,
+            "p05": 16,
+            "p95": 16
+          },
+          "chenMinusSportive": {
+            "count": 64,
+            "leftMean": 16,
+            "rightMean": 16,
+            "meanDifference": 0,
+            "medianDifference": 0,
+            "pairedStandardizedEffect": null,
+            "bootstrap95": {
+              "low": 0,
+              "high": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "sensitivity": {
+    "design": "isolated deterministic human-intent commitment; first-contact severity with one factor increased while mechanics, scenario, and seed stay fixed",
+    "baselineScenarioHash": "19737fe47d61ce78c7c9426fd19091ec9e6e8c00f8d357314f837d7233895583",
+    "summaries": [
+      {
+        "factor": "baseline",
+        "severityInflicted": {
+          "mean": 0.637188,
+          "median": 0.637188,
+          "p05": 0.637188,
+          "p95": 0.637188
+        }
+      },
+      {
+        "factor": "surprise",
+        "severityInflicted": {
+          "mean": 0.656135,
+          "median": 0.656135,
+          "p05": 0.656135,
+          "p95": 0.656135
+        }
+      },
+      {
+        "factor": "reach",
+        "severityInflicted": {
+          "mean": 0.638872,
+          "median": 0.638872,
+          "p05": 0.638872,
+          "p95": 0.638872
+        }
+      },
+      {
+        "factor": "angle",
+        "severityInflicted": {
+          "mean": 0.731924,
+          "median": 0.731924,
+          "p05": 0.731924,
+          "p95": 0.731924
+        }
+      }
+    ],
+    "increasedFactorMinusBaseline": {
+      "surprise": {
+        "count": 64,
+        "leftMean": 0.656135,
+        "rightMean": 0.637188,
+        "meanDifference": 0.018947,
+        "medianDifference": 0.018947,
+        "pairedStandardizedEffect": null,
+        "bootstrap95": {
+          "low": 0.018947,
+          "high": 0.018947
+        }
+      },
+      "reach": {
+        "count": 64,
+        "leftMean": 0.638872,
+        "rightMean": 0.637188,
+        "meanDifference": 0.001684,
+        "medianDifference": 0.001684,
+        "pairedStandardizedEffect": null,
+        "bootstrap95": {
+          "low": 0.001684,
+          "high": 0.001684
+        }
+      },
+      "angle": {
+        "count": 64,
+        "leftMean": 0.731924,
+        "rightMean": 0.637188,
+        "meanDifference": 0.094736,
+        "medianDifference": 0.094736,
+        "pairedStandardizedEffect": 1128817771950106.2,
+        "bootstrap95": {
+          "low": 0.094736,
+          "high": 0.094736
+        }
+      }
+    }
+  },
+  "coefficientAudit": {
+    "doctrineWeightCount": 20,
+    "unexplainedWeightCount": 0,
+    "auditedDecisionRows": 6599,
+    "maximumAbsoluteContributionShareAmongMultiTermDecisions": 0.594714,
+    "maximumShareContext": {
+      "scenarioId": "crowd-broken-sightlines",
+      "policyId": "chen-inspired",
+      "term": "activeThreatBase",
+      "share": 0.594714
+    },
+    "interpretation": "A high share identifies a dominant named term for review; provenance remains explicit for every configured coefficient."
+  },
+  "limitations": [
+    "These are deterministic synthetic-model outputs, not estimates of real-world effectiveness, safety, legality, or probability.",
+    "Policy comparison changes one target actor binding and does not reconstruct a historical person or complete martial tradition.",
+    "Confidence intervals quantify seed variability inside this model only; they do not address model-form uncertainty."
+  ]
+}

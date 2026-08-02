@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://living-here.example/schema/trace-record-1.2.0.schema.json",
+  "title": "Living Here Trace Record 1.2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "tick", "actorId", "visibleActorIds", "selectedAction", "formulaTerms", "randomSamples", "effectPacketIds", "actorStateChecksum"],
+  "properties": {
+    "schemaVersion": { "const": "1.2.0" },
+    "tick": { "type": "integer", "minimum": 0, "maximum": 36000 },
+    "actorId": { "$ref": "#/$defs/id" },
+    "visibleActorIds": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/packetId" }
+    },
+    "selectedAction": { "$ref": "#/$defs/action" },
+    "formulaTerms": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "randomSamples": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "type": "number", "minimum": 0, "maximum": 1 }
+    },
+    "effectPacketIds": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "actorStateChecksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "packetId": { "type": "string", "minLength": 1, "maxLength": 240, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "action": {
+      "enum": ["observe", "communicate", "reposition", "protect", "withdraw", "ready-tool", "commit", "aid-ally", "rally", "wait"]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "morale-cascade-1v3",
+  "name": "Abstract one-versus-three crisis",
+  "seed": 731,
+  "pulseMs": 100,
+  "maxTicks": 12,
+  "map": {
+    "width": 12,
+    "height": 8,
+    "obstacles": [
+      { "id": "north-lane", "x": 2, "y": 0, "width": 7.5, "height": 3.1, "blocksVision": false, "blocksMovement": true },
+      { "id": "south-lane", "x": 2, "y": 5.2, "width": 7.5, "height": 2.8, "blocksVision": false, "blocksMovement": true }
+    ],
+    "exits": [
+      { "id": "east-exit", "x": 10.5, "y": 2, "width": 1.5, "height": 4 }
+    ]
+  },
+  "environment": { "ambientLight": 0.8, "ambientNoise": 0.35, "visibilityScale": 0.9 },
+  "threat": { "active": true, "endsAtTick": 10, "severity": 0.85, "immediacy": 0.95, "retreatAvailable": true, "threatenedActorIds": ["blue-one"] },
+  "rules": {
+    "physics": {
+      "enabled": true,
+      "tempoNoise": 0,
+      "contactNoise": 0,
+      "neutralizationThreshold": 0.99
+    },
+    "morale": {
+      "enabled": true,
+      "shockRadiusM": 6,
+      "shockFalloff": 1,
+      "allyShockScale": 1.2,
+      "leaderResistance": 0.3,
+      "cascadeDepth": 2,
+      "perPulseCap": 0.6,
+      "recoverThreshold": 0.08,
+      "shakenThreshold": 0.12,
+      "frozenThreshold": 0.25,
+      "routeThreshold": 0.4,
+      "recoveryPerPulse": 0.01
+    }
+  },
+  "squads": [
+    { "id": "group-red", "side": "red", "leaderId": "red-lead", "initialCohesion": 0.9 }
+  ],
+  "objectives": [
+    { "id": "red-evacuates", "kind": "evacuate-side", "side": "red" }
+  ],
+  "terminalConditions": [
+    { "kind": "objective-complete", "objectiveId": "red-evacuates" },
+    { "kind": "threat-ended" }
+  ],
+  "actors": [
+    {
+      "id": "blue-one", "side": "blue", "position": { "x": 4.2, "y": 4 },
+      "facingDegrees": 0, "visionRange": 12, "visionArcDegrees": 360,
+      "movementSpeed": 2, "massKg": 95, "radiusM": 0.25, "skill": 1,
+      "balance": 1, "guard": 0.8, "mobility": 1, "surprise": 1,
+      "reachM": 0.8, "protection": 0.2, "stance": "committed",
+      "readiness": 1, "stamina": 1, "resolve": 1, "aggression": 0.9,
+      "threatened": true, "policyId": "chen-inspired"
+    },
+    {
+      "id": "red-front", "side": "red", "squadId": "group-red", "position": { "x": 5, "y": 4 },
+      "facingDegrees": 180, "visionRange": 12, "visionArcDegrees": 360,
+      "movementSpeed": 4, "massKg": 65, "radiusM": 0.25, "skill": 0.25,
+      "balance": 0.6, "guard": 0.2, "mobility": 0.8, "surprise": 0,
+      "reachM": 0.6, "protection": 0, "stance": "guarded",
+      "readiness": 0.35, "stamina": 0.8, "resolve": 0.25, "fear": 0.05,
+      "threatened": true, "policyId": "sportive"
+    },
+    {
+      "id": "red-lead", "side": "red", "squadId": "group-red", "leader": true, "position": { "x": 5.8, "y": 4.6 },
+      "facingDegrees": 180, "visionRange": 12, "visionArcDegrees": 360,
+      "movementSpeed": 4, "massKg": 75, "radiusM": 0.25, "skill": 0.5,
+      "balance": 0.8, "guard": 0.5, "mobility": 0.9, "surprise": 0,
+      "reachM": 0.7, "protection": 0.1, "stance": "guarded",
+      "readiness": 0.55, "stamina": 0.9, "resolve": 0.45, "fear": 0.03,
+      "threatened": true, "policyId": "sportive"
+    },
+    {
+      "id": "red-rear", "side": "red", "squadId": "group-red", "position": { "x": 6.6, "y": 4 },
+      "facingDegrees": 180, "visionRange": 12, "visionArcDegrees": 360,
+      "movementSpeed": 4, "massKg": 70, "radiusM": 0.25, "skill": 0.3,
+      "balance": 0.75, "guard": 0.45, "mobility": 0.85, "surprise": 0,
+      "reachM": 0.65, "protection": 0.05, "stance": "guarded",
+      "readiness": 0.4, "stamina": 0.85, "resolve": 0.3, "fear": 0.04,
+      "threatened": true, "policyId": "sportive"
+    },
+    {
+      "id": "bystander-west", "side": "civilian", "role": "bystander", "tags": ["nonparticipant"], "position": { "x": 2.8, "y": 4.5 },
+      "facingDegrees": 0, "visionRange": 6, "visionArcDegrees": 120, "hearingRangeM": 7, "attention": 0.45, "soundSignature": 0.25,
+      "movementSpeed": 1.2, "massKg": 68, "radiusM": 0.25, "readiness": 0.3, "stamina": 1, "resolve": 0.45,
+      "humanIntent": "observe", "policyId": "human-intent"
+    },
+    {
+      "id": "bystander-east", "side": "civilian", "role": "bystander", "tags": ["nonparticipant"], "position": { "x": 8.2, "y": 3.8 },
+      "facingDegrees": 180, "visionRange": 6, "visionArcDegrees": 120, "hearingRangeM": 7, "attention": 0.4, "soundSignature": 0.25,
+      "movementSpeed": 1.2, "massKg": 70, "radiusM": 0.25, "readiness": 0.3, "stamina": 1, "resolve": 0.5,
+      "humanIntent": "observe", "policyId": "human-intent"
+    }
+  ]
+}

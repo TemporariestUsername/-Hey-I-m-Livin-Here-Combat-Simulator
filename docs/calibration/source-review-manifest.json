@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewPackageId": "source-trait-review-1.0",
+  "releaseCandidate": "1.0.0-rc.1",
+  "engineVersion": "0.4.0",
+  "policyVersions": {
+    "chenInspired": "1.2.0",
+    "sportive": "1.1.0"
+  },
+  "files": [
+    {
+      "path": "docs/calibration/canonical-results.json",
+      "bytes": 64929,
+      "sha256": "77d7176eb1a60ccc8fccff083a941fb9734b3018534ef612a2a20f0b26b739e8"
+    },
+    {
+      "path": "docs/calibration/report-0.6.md",
+      "bytes": 4838,
+      "sha256": "173d099bf56b5a300410b77a8f6ecf2d447baf03f99547ac74aa0be203dae43d"
+    },
+    {
+      "path": "docs/calibration/source-trait-review.md",
+      "bytes": 6303,
+      "sha256": "d1d2e5802eb638933017ee459efd42d3ae0f0824c50369e0565ba785ee4e1d2b"
+    },
+    {
+      "path": "docs/security/prohibited-content-policy.md",
+      "bytes": 3273,
+      "sha256": "c44758abe8b604dfa8eb86441473c10b683275b02d0f153941c9499625c9d552"
+    },
+    {
+      "path": "mad dog combat simulator reference.md",
+      "bytes": 34613,
+      "sha256": "43467d9b81ad04840058db36c65d6c188bb9c60b1b76313ddeda380ffef62e95"
+    },
+    {
+      "path": "packages/engine/src/engagement.ts",
+      "bytes": 4685,
+      "sha256": "22f75844771c05490f93aaa5455a9833ff09d9439fbb60a6d52ebc90a752a1dc"
+    },
+    {
+      "path": "packages/engine/src/mechanics.ts",
+      "bytes": 19812,
+      "sha256": "6f41eee768f7a0c50852d0f1834052b4c1f3cec28d9247aa663369da129815ff"
+    },
+    {
+      "path": "packages/engine/src/morale.ts",
+      "bytes": 10310,
+      "sha256": "d38acaa8e9f2508449a81a09fa16566572312723ab2092f251c2d9ba521194ba"
+    },
+    {
+      "path": "packages/policies/src/index.ts",
+      "bytes": 15553,
+      "sha256": "b9b0479336566a48a208f42d0492fb1c67a2035554cebd1fe23817041fe669ca"
+    },
+    {
+      "path": "packages/scenarios/fixtures/crowd-broken-sightlines.json",
+      "bytes": 3974,
+      "sha256": "89d6e307062fb10ac3f0f6179ee49339c0ead7d288a769a9fcf7cb85ca02d97c"
+    },
+    {
+      "path": "packages/scenarios/fixtures/four-person-escort.json",
+      "bytes": 4247,
+      "sha256": "4df6d5da2025ea77a11c7c176a18e66a6840684f03fa6c65d8bf7402d6e0abef"
+    },
+    {
+      "path": "packages/scenarios/fixtures/morale-cascade-1v3.json",
+      "bytes": 4572,
+      "sha256": "e104ba97f62f4110e9c59804d9ed952a24e31fb38895efdd8ba0da9cd2b0e522"
+    },
+    {
+      "path": "packages/scenarios/fixtures/open-regulated-duel.json",
+      "bytes": 1493,
+      "sha256": "69ac8182c4e63dfd564115f4c8adb4fc6f88c6bef7220a136098ae0390eb79f2"
+    },
+    {
+      "path": "packages/scenarios/fixtures/sudden-crisis-physics.json",
+      "bytes": 2949,
+      "sha256": "ad04426d338158a54b610141df8cb0a9158ab0eeffbbb0929093660c9cc76461"
+    },
+    {
+      "path": "packages/scenarios/fixtures/threat-ends.json",
+      "bytes": 1947,
+      "sha256": "5a553b86b99f583d4aeaeccb94f34c20805b5fb74e6ef32603c3c52fab14c3e9"
+    }
+  ]
+}

@@ -1,13 +1,36 @@
 {
   "name": "living-here-combat-simulator",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/*.test.ts",
+    "test": "npm run schema:check && node --test tests/*.test.ts",
+    "test:browsers": "playwright test",
+    "test:browsers:update": "playwright test --update-snapshots",
+    "verify:release": "npm run verify:phase7 && npm run test:browsers && npm run review:check",
+    "verify:final": "npm run verify:release && npm run review:approval",
+    "verify:phase0": "npm test && node scripts/verify-phase-zero.ts",
+    "verify:phase2": "npm run verify:phase0 && node scripts/verify-phase-two.ts",
+    "verify:phase3": "npm run verify:phase2 && node scripts/verify-phase-three.ts",
+    "verify:phase4": "npm run verify:phase3 && node scripts/verify-phase-four.ts",
+    "verify:phase5": "npm run verify:phase4 && node scripts/verify-phase-five.ts",
+    "verify:phase6": "npm run verify:phase5 && npm run calibrate && node scripts/verify-phase-six.ts",
+    "verify:phase7": "npm run verify:phase6 && npm run release:artifacts && node scripts/verify-phase-seven.ts",
+    "calibrate": "node scripts/run-calibration.ts",
+    "release:artifacts": "node scripts/generate-release-artifacts.ts",
+    "review:package": "node scripts/generate-source-review-manifest.ts",
+    "review:check": "node scripts/generate-source-review-manifest.ts --check && node scripts/verify-source-review.ts --allow-pending",
+    "review:approval": "node scripts/verify-source-review.ts",
+    "ops": "node scripts/operations.ts",
+    "schema:generate": "node scripts/generate-schema-types.ts",
+    "schema:check": "node scripts/generate-schema-types.ts --check",
+    "benchmark": "node benchmarks/run-benchmark.ts",
     "validate": "node apps/cli/src/index.ts validate",
     "run": "node apps/cli/src/index.ts run",
     "replay": "node apps/cli/src/index.ts replay",
-    "benchmark": "node benchmarks/headless.ts"
+    "api": "node apps/api/src/index.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1"
   }
 }

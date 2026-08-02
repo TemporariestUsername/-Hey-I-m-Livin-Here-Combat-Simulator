@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://living-here.example/schema/run-log-1.3.0.schema.json",
+  "title": "Living Here Run Log 1.3.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "engineVersion",
+    "scenario",
+    "initialState",
+    "events",
+    "traces",
+    "finalState",
+    "finalChecksum",
+    "snapshots"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.3.0"
+    },
+    "engineVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "scenario": {
+      "$ref": "https://living-here.example/schema/scenario-1.3.0.schema.json"
+    },
+    "initialState": {
+      "$ref": "https://living-here.example/schema/simulation-state-1.3.0.schema.json"
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": {
+        "$ref": "https://living-here.example/schema/simulation-event-1.3.0.schema.json"
+      }
+    },
+    "traces": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": {
+        "$ref": "https://living-here.example/schema/trace-record-1.3.0.schema.json"
+      }
+    },
+    "finalState": {
+      "$ref": "https://living-here.example/schema/simulation-state-1.3.0.schema.json"
+    },
+    "finalChecksum": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "snapshots": {
+      "type": "array",
+      "maxItems": 1441,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tick",
+          "state",
+          "eventSequence",
+          "traceCount"
+        ],
+        "properties": {
+          "tick": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 36000
+          },
+          "state": {
+            "$ref": "https://living-here.example/schema/simulation-state-1.3.0.schema.json"
+          },
+          "eventSequence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "traceCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        }
+      }
+    }
+  }
+}

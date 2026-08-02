@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "crowd-broken-sightlines",
+  "name": "Crowd pressure with broken sightlines",
+  "seed": 505,
+  "pulseMs": 100,
+  "maxTicks": 18,
+  "map": {
+    "width": 14,
+    "height": 10,
+    "obstacles": [
+      { "id": "screen-west", "x": 4.5, "y": 0, "width": 0.6, "height": 4, "blocksVision": true, "blocksMovement": true },
+      { "id": "screen-east", "x": 4.5, "y": 6, "width": 0.6, "height": 4, "blocksVision": true, "blocksMovement": true },
+      { "id": "island", "x": 8, "y": 3.5, "width": 1.2, "height": 3, "blocksVision": true, "blocksMovement": true }
+    ],
+    "exits": [{ "id": "west-exit", "x": 0, "y": 3.5, "width": 1, "height": 3 }],
+    "navigableAreas": [
+      { "id": "west-concourse", "x": 0, "y": 0, "width": 8, "height": 10 },
+      { "id": "east-concourse", "x": 5.1, "y": 0, "width": 8.9, "height": 10 }
+    ],
+    "environmentZones": [
+      { "id": "crowd-noise", "kind": "noise", "x": 2, "y": 2, "width": 10, "height": 6, "value": 0.85 },
+      { "id": "screen-shadow", "kind": "light", "x": 4, "y": 0, "width": 5.5, "height": 10, "value": 0.45 },
+      { "id": "island-cover", "kind": "cover", "x": 7.2, "y": 3, "width": 2.8, "height": 4, "value": 0.7 }
+    ]
+  },
+  "environment": { "ambientLight": 0.65, "ambientNoise": 0.7, "visibilityScale": 0.8 },
+  "scheduledEvents": [
+    { "id": "crowd-densifies", "tick": 6, "kind": "environment", "ambientNoise": 0.9, "visibilityScale": 0.45 },
+    { "id": "sightline-reopens", "tick": 12, "kind": "environment", "ambientNoise": 0.6, "visibilityScale": 0.85 }
+  ],
+  "threat": { "active": true, "endsAtTick": 18, "severity": 0.65, "immediacy": 0.75, "retreatAvailable": true },
+  "rules": {
+    "physics": { "enabled": true, "neutralizationThreshold": 0.96 },
+    "morale": { "enabled": true, "shockRadiusM": 5, "cascadeDepth": 1, "perPulseCap": 0.35 }
+  },
+  "squads": [{ "id": "blue-pair", "side": "blue", "leaderId": "blue-focus", "initialCohesion": 0.8 }],
+  "objectives": [{ "id": "blue-safe", "kind": "protect-side", "side": "blue" }],
+  "terminalConditions": [{ "kind": "threat-ended" }],
+  "actors": [
+    { "id": "blue-focus", "side": "blue", "squadId": "blue-pair", "leader": true, "role": "focus", "position": { "x": 3.5, "y": 5 }, "facingDegrees": 0, "visionRange": 8, "visionArcDegrees": 160, "hearingRangeM": 9, "attention": 0.8, "soundSignature": 0.45, "movementSpeed": 2.2, "massKg": 76, "radiusM": 0.25, "skill": 0.7, "balance": 0.85, "guard": 0.65, "mobility": 0.9, "surprise": 0.35, "reachM": 0.7, "protection": 0.1, "stance": "mobile", "readiness": 0.75, "stamina": 1, "resolve": 0.8, "threatened": true, "policyId": "chen-inspired" },
+    { "id": "blue-support", "side": "blue", "squadId": "blue-pair", "position": { "x": 2.7, "y": 5.8 }, "facingDegrees": 0, "visionRange": 7, "visionArcDegrees": 140, "movementSpeed": 2.1, "massKg": 72, "radiusM": 0.25, "skill": 0.55, "balance": 0.8, "guard": 0.7, "mobility": 0.85, "surprise": 0.1, "reachM": 0.65, "protection": 0.1, "stance": "guarded", "readiness": 0.65, "stamina": 1, "resolve": 0.7, "threatened": true, "policyId": "safety-first" },
+    { "id": "amber-near", "side": "amber", "position": { "x": 5.6, "y": 5 }, "facingDegrees": 180, "visionRange": 8, "visionArcDegrees": 160, "movementSpeed": 2, "massKg": 80, "radiusM": 0.25, "skill": 0.65, "balance": 0.85, "guard": 0.6, "mobility": 0.85, "surprise": 0.2, "reachM": 0.7, "protection": 0.05, "stance": "mobile", "readiness": 0.7, "stamina": 1, "resolve": 0.65, "threatened": true, "policyId": "sportive" },
+    { "id": "amber-screened", "side": "amber", "position": { "x": 7.2, "y": 2.5 }, "facingDegrees": 180, "visionRange": 8, "visionArcDegrees": 120, "movementSpeed": 2, "massKg": 74, "radiusM": 0.25, "skill": 0.55, "balance": 0.8, "guard": 0.6, "mobility": 0.85, "surprise": 0.4, "reachM": 0.65, "protection": 0.05, "stance": "mobile", "readiness": 0.65, "stamina": 1, "resolve": 0.55, "threatened": true, "policyId": "sportive" }
+  ]
+}

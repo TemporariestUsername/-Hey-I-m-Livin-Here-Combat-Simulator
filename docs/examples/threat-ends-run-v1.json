@@ -1,0 +1,1087 @@
+{
+  "schemaVersion": "1.3.0",
+  "engineVersion": "0.4.0",
+  "scenario": {
+    "schemaVersion": "1.3.0",
+    "id": "threat-ends",
+    "name": "Effect-triggered threat termination safety fixture",
+    "seed": 77,
+    "pulseMs": 100,
+    "maxTicks": 5,
+    "map": {
+      "width": 10,
+      "height": 10
+    },
+    "threat": {
+      "active": true,
+      "severity": 0.9,
+      "immediacy": 1,
+      "retreatAvailable": true,
+      "threatenedActorIds": [
+        "defender"
+      ]
+    },
+    "rules": {
+      "physics": {
+        "enabled": true,
+        "interruptMargin": 0.15,
+        "tempoNoise": 0,
+        "contactNoise": 0,
+        "recoveryPerPulse": 0.03,
+        "impairmentRecoveryPerPulse": 0.003,
+        "separationScaleM": 0.1,
+        "neutralizationThreshold": 0.55
+      }
+    },
+    "objectives": [
+      {
+        "id": "end-threat",
+        "kind": "neutralize-side",
+        "side": "threat"
+      }
+    ],
+    "terminalConditions": [
+      {
+        "kind": "side-neutralized",
+        "side": "threat"
+      }
+    ],
+    "actors": [
+      {
+        "id": "aggressor",
+        "side": "threat",
+        "position": {
+          "x": 5.8,
+          "y": 5
+        },
+        "facingDegrees": 180,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.2,
+        "massKg": 70,
+        "radiusM": 0.3,
+        "skill": 0.5,
+        "balance": 0.6,
+        "guard": 0.3,
+        "mobility": 0.75,
+        "surprise": 0,
+        "reachM": 0.8,
+        "protection": 0,
+        "stance": "neutral",
+        "readiness": 0.4,
+        "stamina": 0.9,
+        "resolve": 0.5,
+        "threatened": true,
+        "policyId": "safety-first"
+      },
+      {
+        "id": "defender",
+        "side": "protected",
+        "position": {
+          "x": 5,
+          "y": 5
+        },
+        "facingDegrees": 0,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.6,
+        "massKg": 80,
+        "radiusM": 0.3,
+        "skill": 0.9,
+        "balance": 0.9,
+        "guard": 0.7,
+        "mobility": 0.95,
+        "surprise": 0.9,
+        "reachM": 1,
+        "protection": 0.1,
+        "stance": "committed",
+        "readiness": 0.95,
+        "stamina": 1,
+        "resolve": 0.9,
+        "threatened": true,
+        "policyId": "random-valid"
+      }
+    ]
+  },
+  "initialState": {
+    "schemaVersion": "1.3.0",
+    "scenarioId": "threat-ends",
+    "tick": 0,
+    "elapsedMs": 0,
+    "threatActive": true,
+    "done": false,
+    "environment": {
+      "ambientLight": 1,
+      "ambientNoise": 0,
+      "visibilityScale": 1
+    },
+    "randomStreams": {
+      "sensing": {
+        "state": "999c4e27eeb7be13",
+        "increment": "0000000000000003",
+        "draws": 0
+      },
+      "movement": {
+        "state": "4a40368287e2bc6f",
+        "increment": "0000000000000005",
+        "draws": 0
+      },
+      "contact": {
+        "state": "fae41edd210dbacb",
+        "increment": "0000000000000007",
+        "draws": 0
+      },
+      "morale": {
+        "state": "ab880737ba38b927",
+        "increment": "0000000000000009",
+        "draws": 0
+      },
+      "policy": {
+        "state": "5c2bef925363b783",
+        "increment": "000000000000000b",
+        "draws": 0
+      }
+    },
+    "objectiveProgress": {
+      "end-threat": false
+    },
+    "squads": [],
+    "actors": [
+      {
+        "id": "aggressor",
+        "side": "threat",
+        "position": {
+          "x": 5.8,
+          "y": 5
+        },
+        "facingDegrees": 180,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.2,
+        "massKg": 70,
+        "radiusM": 0.3,
+        "skill": 0.5,
+        "balance": 0.6,
+        "guard": 0.3,
+        "mobility": 0.75,
+        "surprise": 0,
+        "reachM": 0.8,
+        "protection": 0,
+        "stance": "neutral",
+        "readiness": 0.4,
+        "stamina": 0.9,
+        "resolve": 0.5,
+        "threatened": true,
+        "policyId": "safety-first",
+        "active": true,
+        "intent": "observe",
+        "shock": 0,
+        "impairment": 0,
+        "disruption": 0,
+        "recoveryTicks": 0,
+        "neutralized": false,
+        "fear": 0,
+        "moraleState": "steady",
+        "escaped": false,
+        "awareness": 0.5,
+        "memoryActorIds": [],
+        "memoryAges": {},
+        "toolReady": 0,
+        "toolAvailable": false,
+        "engagementHeadroom": 0
+      },
+      {
+        "id": "defender",
+        "side": "protected",
+        "position": {
+          "x": 5,
+          "y": 5
+        },
+        "facingDegrees": 0,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.6,
+        "massKg": 80,
+        "radiusM": 0.3,
+        "skill": 0.9,
+        "balance": 0.9,
+        "guard": 0.7,
+        "mobility": 0.95,
+        "surprise": 0.9,
+        "reachM": 1,
+        "protection": 0.1,
+        "stance": "committed",
+        "readiness": 0.95,
+        "stamina": 1,
+        "resolve": 0.9,
+        "threatened": true,
+        "policyId": "random-valid",
+        "active": true,
+        "intent": "observe",
+        "shock": 0,
+        "impairment": 0,
+        "disruption": 0,
+        "recoveryTicks": 0,
+        "neutralized": false,
+        "fear": 0,
+        "moraleState": "steady",
+        "escaped": false,
+        "awareness": 0.5,
+        "memoryActorIds": [],
+        "memoryAges": {},
+        "toolReady": 0,
+        "toolAvailable": false,
+        "engagementHeadroom": 0
+      }
+    ]
+  },
+  "events": [
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 0,
+      "tick": 0,
+      "type": "simulation-started",
+      "payload": {
+        "scenarioId": "threat-ends",
+        "seed": 77
+      },
+      "priorChecksum": "0000000000000000000000000000000000000000000000000000000000000000",
+      "checksum": "ef9414ee02eb3ea75c18be82e5266ac3af056660eb5a4252bf745c60e9efa9e6"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 1,
+      "tick": 1,
+      "type": "observation-built",
+      "payload": {
+        "observerId": "aggressor",
+        "visibleActorIds": [
+          "defender"
+        ],
+        "heardActorIds": [],
+        "rememberedActorIds": [],
+        "uncertainty": 0.058592,
+        "rngSamples": []
+      },
+      "priorChecksum": "ef9414ee02eb3ea75c18be82e5266ac3af056660eb5a4252bf745c60e9efa9e6",
+      "checksum": "f0ae8e5527f4b6e588c68e4c98c7f46539e7da4f3b8c86e8efc60f41cbfc8ea6"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 2,
+      "tick": 1,
+      "type": "observation-built",
+      "payload": {
+        "observerId": "defender",
+        "visibleActorIds": [
+          "aggressor"
+        ],
+        "heardActorIds": [],
+        "rememberedActorIds": [],
+        "uncertainty": 0.058592,
+        "rngSamples": []
+      },
+      "priorChecksum": "f0ae8e5527f4b6e588c68e4c98c7f46539e7da4f3b8c86e8efc60f41cbfc8ea6",
+      "checksum": "91e8c9484ca2c85bcc2e5011dcbf187a439bee46b883f4a7141dab2068465ba0"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 3,
+      "tick": 1,
+      "type": "policy-decided",
+      "payload": {
+        "actorId": "aggressor",
+        "policyId": "safety-first",
+        "policyVersion": "1.0.0",
+        "selected": "withdraw",
+        "candidates": [
+          {
+            "action": "withdraw",
+            "eligible": true,
+            "score": 0.8,
+            "contributions": {
+              "safety": 0.8,
+              "detectedRisk": 1
+            }
+          },
+          {
+            "action": "observe",
+            "eligible": true,
+            "score": 0.2,
+            "contributions": {
+              "safety": 0.2
+            }
+          },
+          {
+            "action": "commit",
+            "eligible": false,
+            "score": 0,
+            "contributions": {
+              "safety": -1
+            }
+          }
+        ],
+        "rationale": "Prefer separation and disengagement whenever withdrawal is available.",
+        "rngSamples": []
+      },
+      "priorChecksum": "91e8c9484ca2c85bcc2e5011dcbf187a439bee46b883f4a7141dab2068465ba0",
+      "checksum": "62baaacbb1884e32b793cead31cd14f3067da1518e80a0bd59501f62a6d0a34f"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 4,
+      "tick": 1,
+      "type": "intent-resolved",
+      "payload": {
+        "actorId": "aggressor",
+        "selected": "withdraw",
+        "stamina": 0.895
+      },
+      "priorChecksum": "62baaacbb1884e32b793cead31cd14f3067da1518e80a0bd59501f62a6d0a34f",
+      "checksum": "f2e78438521147f2f10cda48032a839365ee51c02e6ad7c606cdf4088fa7f240"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 5,
+      "tick": 1,
+      "type": "policy-decided",
+      "payload": {
+        "actorId": "defender",
+        "policyId": "random-valid",
+        "policyVersion": "1.0.0",
+        "selected": "commit",
+        "candidates": [
+          {
+            "action": "withdraw",
+            "eligible": true,
+            "score": 0.614491,
+            "contributions": {
+              "randomSample": 0.614491
+            }
+          },
+          {
+            "action": "commit",
+            "eligible": true,
+            "score": 0.385509,
+            "contributions": {
+              "randomSample": 0.385509,
+              "threatened": 1
+            }
+          }
+        ],
+        "rationale": "Select between valid baseline actions using the named policy random stream.",
+        "rngSamples": [
+          0.385509
+        ]
+      },
+      "priorChecksum": "f2e78438521147f2f10cda48032a839365ee51c02e6ad7c606cdf4088fa7f240",
+      "checksum": "ab081f47f1072ec6c2704bc8afffab56964c2e6189e7f5290c0c25a2acf3c51c"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 6,
+      "tick": 1,
+      "type": "intent-resolved",
+      "payload": {
+        "actorId": "defender",
+        "selected": "commit",
+        "stamina": 0.98
+      },
+      "priorChecksum": "ab081f47f1072ec6c2704bc8afffab56964c2e6189e7f5290c0c25a2acf3c51c",
+      "checksum": "061a73062d7b9a3631c52bf252d117cc7f4a0f43ff29759218663b602631310b"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 7,
+      "tick": 1,
+      "type": "movement-resolved",
+      "payload": {
+        "actorId": "aggressor",
+        "from": {
+          "x": 5.8,
+          "y": 5
+        },
+        "to": {
+          "x": 5.89,
+          "y": 5
+        },
+        "blocked": false
+      },
+      "priorChecksum": "061a73062d7b9a3631c52bf252d117cc7f4a0f43ff29759218663b602631310b",
+      "checksum": "a60d26bac9d42887f473c304efbfd0c5e07ecee73ae1e1e495f66d6cc226e5e5"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 8,
+      "tick": 1,
+      "type": "movement-resolved",
+      "payload": {
+        "actorId": "defender",
+        "from": {
+          "x": 5,
+          "y": 5
+        },
+        "to": {
+          "x": 5,
+          "y": 5
+        },
+        "blocked": false
+      },
+      "priorChecksum": "a60d26bac9d42887f473c304efbfd0c5e07ecee73ae1e1e495f66d6cc226e5e5",
+      "checksum": "4a37af61ed55dcd649217d6446347ecc7880d3afa7726f5ad984280c8fd79076"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 9,
+      "tick": 1,
+      "type": "tempo-resolved",
+      "payload": {
+        "actorId": "defender",
+        "targetId": "aggressor",
+        "tempo": 1.402,
+        "terms": {
+          "readiness": 0.95,
+          "stanceBonus": 0.15,
+          "surpriseBonus": 0.315,
+          "stressPenalty": 0,
+          "encumbrancePenalty": 0.013,
+          "toolReadiness": 0
+        },
+        "noise": 0,
+        "interrupted": false
+      },
+      "priorChecksum": "4a37af61ed55dcd649217d6446347ecc7880d3afa7726f5ad984280c8fd79076",
+      "checksum": "b7909bb54b4fc7ff104e9a806e250f5eb3b37e92fd3c0bba247c3fac0db42838"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 10,
+      "tick": 1,
+      "type": "contact-resolved",
+      "payload": {
+        "packetId": "effect-1-defender-aggressor",
+        "sourceId": "defender",
+        "targetId": "aggressor",
+        "contactQuality": 0.647111,
+        "severity": 0.588767,
+        "impulseNs": 22.612128,
+        "terms": {
+          "skill": 0.288,
+          "angleAdvantage": 0,
+          "reachAdvantage": 0.0852,
+          "impulse": 0.082911,
+          "surprise": 0.162,
+          "readiness": 0.095,
+          "guardPenalty": 0.066,
+          "sourceShockPenalty": 0,
+          "targetStabilityPenalty": 0.132,
+          "protectionPenalty": 0,
+          "toolReadiness": 0,
+          "targetDefensiveUtility": 0
+        },
+        "noise": 0,
+        "disruption": 0.441575,
+        "impairment": 0.152445,
+        "shock": 0.651014,
+        "separationM": 0.058877,
+        "neutralization": true,
+        "disarm": false
+      },
+      "priorChecksum": "b7909bb54b4fc7ff104e9a806e250f5eb3b37e92fd3c0bba247c3fac0db42838",
+      "checksum": "e8cb32ed1ee4e6be55f9e91c0d8bfdc06ae6880684d41c0f85c42a93147d9199"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 11,
+      "tick": 1,
+      "type": "effects-applied",
+      "payload": {
+        "targetId": "aggressor",
+        "packetIds": [
+          "effect-1-defender-aggressor"
+        ],
+        "deltas": {
+          "disruption": 0.441575,
+          "impairment": 0.152445,
+          "shock": 0.651014,
+          "balance": -0.154551,
+          "guard": -0.110394,
+          "stamina": -0.066236
+        },
+        "neutralized": true,
+        "from": {
+          "x": 5.89,
+          "y": 5
+        },
+        "to": {
+          "x": 5.948877,
+          "y": 5
+        }
+      },
+      "priorChecksum": "e8cb32ed1ee4e6be55f9e91c0d8bfdc06ae6880684d41c0f85c42a93147d9199",
+      "checksum": "a150a89eba9a4c7058363dece55cb2af6c93d7887f06c7c6333162f63a75a6c7"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 12,
+      "tick": 1,
+      "type": "threat-ended",
+      "payload": {
+        "reason": "decisive-effect-side-neutralized-threat"
+      },
+      "priorChecksum": "a150a89eba9a4c7058363dece55cb2af6c93d7887f06c7c6333162f63a75a6c7",
+      "checksum": "9e47e2655dd3baab1443e3d5cd1856df6e879cf2720d655082ebefc8e02bf25f"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 13,
+      "tick": 1,
+      "type": "objective-updated",
+      "payload": {
+        "objectiveId": "end-threat",
+        "complete": true
+      },
+      "priorChecksum": "9e47e2655dd3baab1443e3d5cd1856df6e879cf2720d655082ebefc8e02bf25f",
+      "checksum": "3a94278e4da79b6d5630786d675f83b239d478ec3e6e3a6f36c9538ec65a09cd"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 14,
+      "tick": 1,
+      "type": "terminal-reached",
+      "payload": {
+        "reason": "side-neutralized-threat"
+      },
+      "priorChecksum": "3a94278e4da79b6d5630786d675f83b239d478ec3e6e3a6f36c9538ec65a09cd",
+      "checksum": "fbe4d803132218fcf6e141b11755948b8aef550b8b13b4764a52b7706251d706"
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "sequence": 15,
+      "tick": 1,
+      "type": "simulation-ended",
+      "payload": {
+        "reason": "side-neutralized-threat"
+      },
+      "priorChecksum": "fbe4d803132218fcf6e141b11755948b8aef550b8b13b4764a52b7706251d706",
+      "checksum": "c8e38ddd5ec631a20fa31b85493ee4cda5cd9618c0c729869c45120469f3e5a9"
+    }
+  ],
+  "traces": [
+    {
+      "schemaVersion": "1.3.0",
+      "tick": 1,
+      "actorId": "aggressor",
+      "visibleActorIds": [
+        "defender"
+      ],
+      "heardActorIds": [],
+      "rememberedActorIds": [],
+      "observationUncertainty": 0.058592,
+      "selectedAction": "withdraw",
+      "formulaTerms": {
+        "policy.safety": 0.8,
+        "policy.detectedRisk": 1
+      },
+      "randomSamples": [],
+      "effectPacketIds": [
+        "effect-1-defender-aggressor"
+      ],
+      "actorStateChecksum": "e37a0691d8f7e7661bd7bce2cef70e05bf67ce38ab90a8f2d0f4b17993b34a3a",
+      "gatePredicates": {
+        "activeThreat": true,
+        "severitySufficient": true,
+        "immediacySufficient": true,
+        "threatenedParty": true,
+        "commitmentPermitted": true,
+        "protectionPermitted": true,
+        "withdrawalPermitted": true,
+        "retreatAvailable": true
+      }
+    },
+    {
+      "schemaVersion": "1.3.0",
+      "tick": 1,
+      "actorId": "defender",
+      "visibleActorIds": [
+        "aggressor"
+      ],
+      "heardActorIds": [],
+      "rememberedActorIds": [],
+      "observationUncertainty": 0.058592,
+      "selectedAction": "commit",
+      "formulaTerms": {
+        "policy.randomSample": 0.385509,
+        "policy.threatened": 1,
+        "tempo": 1.402,
+        "tempo.readiness": 0.95,
+        "tempo.stanceBonus": 0.15,
+        "tempo.surpriseBonus": 0.315,
+        "tempo.stressPenalty": 0,
+        "tempo.encumbrancePenalty": 0.013,
+        "tempo.toolReadiness": 0,
+        "contactQuality": 0.647111,
+        "severity": 0.588767,
+        "impulseNs": 22.612128,
+        "contact.skill": 0.288,
+        "contact.angleAdvantage": 0,
+        "contact.reachAdvantage": 0.0852,
+        "contact.impulse": 0.082911,
+        "contact.surprise": 0.162,
+        "contact.readiness": 0.095,
+        "contact.guardPenalty": 0.066,
+        "contact.sourceShockPenalty": 0,
+        "contact.targetStabilityPenalty": 0.132,
+        "contact.protectionPenalty": 0,
+        "contact.toolReadiness": 0,
+        "contact.targetDefensiveUtility": 0
+      },
+      "randomSamples": [
+        0.385509,
+        0.72278,
+        0.906302
+      ],
+      "effectPacketIds": [
+        "effect-1-defender-aggressor"
+      ],
+      "actorStateChecksum": "403959a8fb03370a2c8bb23a63dfecdf687ce659369acef88c8957aeb291bee4",
+      "gatePredicates": {
+        "activeThreat": true,
+        "severitySufficient": true,
+        "immediacySufficient": true,
+        "threatenedParty": true,
+        "commitmentPermitted": true,
+        "protectionPermitted": true,
+        "withdrawalPermitted": true,
+        "retreatAvailable": true
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "tick": 0,
+      "state": {
+        "schemaVersion": "1.3.0",
+        "scenarioId": "threat-ends",
+        "tick": 0,
+        "elapsedMs": 0,
+        "threatActive": true,
+        "done": false,
+        "environment": {
+          "ambientLight": 1,
+          "ambientNoise": 0,
+          "visibilityScale": 1
+        },
+        "randomStreams": {
+          "sensing": {
+            "state": "999c4e27eeb7be13",
+            "increment": "0000000000000003",
+            "draws": 0
+          },
+          "movement": {
+            "state": "4a40368287e2bc6f",
+            "increment": "0000000000000005",
+            "draws": 0
+          },
+          "contact": {
+            "state": "fae41edd210dbacb",
+            "increment": "0000000000000007",
+            "draws": 0
+          },
+          "morale": {
+            "state": "ab880737ba38b927",
+            "increment": "0000000000000009",
+            "draws": 0
+          },
+          "policy": {
+            "state": "5c2bef925363b783",
+            "increment": "000000000000000b",
+            "draws": 0
+          }
+        },
+        "objectiveProgress": {
+          "end-threat": false
+        },
+        "squads": [],
+        "actors": [
+          {
+            "id": "aggressor",
+            "side": "threat",
+            "position": {
+              "x": 5.8,
+              "y": 5
+            },
+            "facingDegrees": 180,
+            "visionRange": 10,
+            "visionArcDegrees": 180,
+            "movementSpeed": 1.2,
+            "massKg": 70,
+            "radiusM": 0.3,
+            "skill": 0.5,
+            "balance": 0.6,
+            "guard": 0.3,
+            "mobility": 0.75,
+            "surprise": 0,
+            "reachM": 0.8,
+            "protection": 0,
+            "stance": "neutral",
+            "readiness": 0.4,
+            "stamina": 0.9,
+            "resolve": 0.5,
+            "threatened": true,
+            "policyId": "safety-first",
+            "active": true,
+            "intent": "observe",
+            "shock": 0,
+            "impairment": 0,
+            "disruption": 0,
+            "recoveryTicks": 0,
+            "neutralized": false,
+            "fear": 0,
+            "moraleState": "steady",
+            "escaped": false,
+            "awareness": 0.5,
+            "memoryActorIds": [],
+            "memoryAges": {},
+            "toolReady": 0,
+            "toolAvailable": false,
+            "engagementHeadroom": 0
+          },
+          {
+            "id": "defender",
+            "side": "protected",
+            "position": {
+              "x": 5,
+              "y": 5
+            },
+            "facingDegrees": 0,
+            "visionRange": 10,
+            "visionArcDegrees": 180,
+            "movementSpeed": 1.6,
+            "massKg": 80,
+            "radiusM": 0.3,
+            "skill": 0.9,
+            "balance": 0.9,
+            "guard": 0.7,
+            "mobility": 0.95,
+            "surprise": 0.9,
+            "reachM": 1,
+            "protection": 0.1,
+            "stance": "committed",
+            "readiness": 0.95,
+            "stamina": 1,
+            "resolve": 0.9,
+            "threatened": true,
+            "policyId": "random-valid",
+            "active": true,
+            "intent": "observe",
+            "shock": 0,
+            "impairment": 0,
+            "disruption": 0,
+            "recoveryTicks": 0,
+            "neutralized": false,
+            "fear": 0,
+            "moraleState": "steady",
+            "escaped": false,
+            "awareness": 0.5,
+            "memoryActorIds": [],
+            "memoryAges": {},
+            "toolReady": 0,
+            "toolAvailable": false,
+            "engagementHeadroom": 0
+          }
+        ]
+      },
+      "eventSequence": 0,
+      "traceCount": 0
+    },
+    {
+      "tick": 1,
+      "state": {
+        "schemaVersion": "1.3.0",
+        "scenarioId": "threat-ends",
+        "tick": 1,
+        "elapsedMs": 100,
+        "threatActive": false,
+        "done": true,
+        "environment": {
+          "ambientLight": 1,
+          "ambientNoise": 0,
+          "visibilityScale": 1
+        },
+        "randomStreams": {
+          "sensing": {
+            "state": "999c4e27eeb7be13",
+            "increment": "0000000000000003",
+            "draws": 0
+          },
+          "movement": {
+            "state": "4a40368287e2bc6f",
+            "increment": "0000000000000005",
+            "draws": 0
+          },
+          "contact": {
+            "state": "e24d74b29735ac05",
+            "increment": "0000000000000007",
+            "draws": 2
+          },
+          "morale": {
+            "state": "ab880737ba38b927",
+            "increment": "0000000000000009",
+            "draws": 0
+          },
+          "policy": {
+            "state": "ac61f5a2d3d03f12",
+            "increment": "000000000000000b",
+            "draws": 1
+          }
+        },
+        "objectiveProgress": {
+          "end-threat": true
+        },
+        "squads": [],
+        "actors": [
+          {
+            "id": "aggressor",
+            "side": "threat",
+            "position": {
+              "x": 5.948877,
+              "y": 5
+            },
+            "facingDegrees": 180,
+            "visionRange": 10,
+            "visionArcDegrees": 180,
+            "movementSpeed": 1.2,
+            "massKg": 70,
+            "radiusM": 0.3,
+            "skill": 0.5,
+            "balance": 0.445449,
+            "guard": 0.189606,
+            "mobility": 0.75,
+            "surprise": 0,
+            "reachM": 0.8,
+            "protection": 0,
+            "stance": "neutral",
+            "readiness": 0.4,
+            "stamina": 0.828764,
+            "resolve": 0.5,
+            "threatened": true,
+            "policyId": "safety-first",
+            "active": false,
+            "intent": "withdraw",
+            "shock": 0.651014,
+            "impairment": 0.152445,
+            "disruption": 0.441575,
+            "recoveryTicks": 5,
+            "neutralized": true,
+            "fear": 0,
+            "moraleState": "steady",
+            "escaped": false,
+            "awareness": 0.525,
+            "memoryActorIds": [
+              "defender"
+            ],
+            "memoryAges": {
+              "defender": 0
+            },
+            "toolReady": 0,
+            "toolAvailable": false,
+            "engagementHeadroom": 1
+          },
+          {
+            "id": "defender",
+            "side": "protected",
+            "position": {
+              "x": 5,
+              "y": 5
+            },
+            "facingDegrees": 0,
+            "visionRange": 10,
+            "visionArcDegrees": 180,
+            "movementSpeed": 1.6,
+            "massKg": 80,
+            "radiusM": 0.3,
+            "skill": 0.9,
+            "balance": 0.9,
+            "guard": 0.7,
+            "mobility": 0.95,
+            "surprise": 0.9,
+            "reachM": 1,
+            "protection": 0.1,
+            "stance": "committed",
+            "readiness": 0.95,
+            "stamina": 0.98,
+            "resolve": 0.9,
+            "threatened": true,
+            "policyId": "random-valid",
+            "active": true,
+            "intent": "commit",
+            "shock": 0,
+            "impairment": 0,
+            "disruption": 0,
+            "recoveryTicks": 0,
+            "neutralized": false,
+            "fear": 0,
+            "moraleState": "steady",
+            "escaped": false,
+            "awareness": 0.525,
+            "memoryActorIds": [
+              "aggressor"
+            ],
+            "memoryAges": {
+              "aggressor": 0
+            },
+            "toolReady": 0,
+            "toolAvailable": false,
+            "engagementHeadroom": 1
+          }
+        ],
+        "terminalReason": "side-neutralized-threat"
+      },
+      "eventSequence": 16,
+      "traceCount": 2
+    }
+  ],
+  "finalState": {
+    "schemaVersion": "1.3.0",
+    "scenarioId": "threat-ends",
+    "tick": 1,
+    "elapsedMs": 100,
+    "threatActive": false,
+    "done": true,
+    "environment": {
+      "ambientLight": 1,
+      "ambientNoise": 0,
+      "visibilityScale": 1
+    },
+    "randomStreams": {
+      "sensing": {
+        "state": "999c4e27eeb7be13",
+        "increment": "0000000000000003",
+        "draws": 0
+      },
+      "movement": {
+        "state": "4a40368287e2bc6f",
+        "increment": "0000000000000005",
+        "draws": 0
+      },
+      "contact": {
+        "state": "e24d74b29735ac05",
+        "increment": "0000000000000007",
+        "draws": 2
+      },
+      "morale": {
+        "state": "ab880737ba38b927",
+        "increment": "0000000000000009",
+        "draws": 0
+      },
+      "policy": {
+        "state": "ac61f5a2d3d03f12",
+        "increment": "000000000000000b",
+        "draws": 1
+      }
+    },
+    "objectiveProgress": {
+      "end-threat": true
+    },
+    "squads": [],
+    "actors": [
+      {
+        "id": "aggressor",
+        "side": "threat",
+        "position": {
+          "x": 5.948877,
+          "y": 5
+        },
+        "facingDegrees": 180,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.2,
+        "massKg": 70,
+        "radiusM": 0.3,
+        "skill": 0.5,
+        "balance": 0.445449,
+        "guard": 0.189606,
+        "mobility": 0.75,
+        "surprise": 0,
+        "reachM": 0.8,
+        "protection": 0,
+        "stance": "neutral",
+        "readiness": 0.4,
+        "stamina": 0.828764,
+        "resolve": 0.5,
+        "threatened": true,
+        "policyId": "safety-first",
+        "active": false,
+        "intent": "withdraw",
+        "shock": 0.651014,
+        "impairment": 0.152445,
+        "disruption": 0.441575,
+        "recoveryTicks": 5,
+        "neutralized": true,
+        "fear": 0,
+        "moraleState": "steady",
+        "escaped": false,
+        "awareness": 0.525,
+        "memoryActorIds": [
+          "defender"
+        ],
+        "memoryAges": {
+          "defender": 0
+        },
+        "toolReady": 0,
+        "toolAvailable": false,
+        "engagementHeadroom": 1
+      },
+      {
+        "id": "defender",
+        "side": "protected",
+        "position": {
+          "x": 5,
+          "y": 5
+        },
+        "facingDegrees": 0,
+        "visionRange": 10,
+        "visionArcDegrees": 180,
+        "movementSpeed": 1.6,
+        "massKg": 80,
+        "radiusM": 0.3,
+        "skill": 0.9,
+        "balance": 0.9,
+        "guard": 0.7,
+        "mobility": 0.95,
+        "surprise": 0.9,
+        "reachM": 1,
+        "protection": 0.1,
+        "stance": "committed",
+        "readiness": 0.95,
+        "stamina": 0.98,
+        "resolve": 0.9,
+        "threatened": true,
+        "policyId": "random-valid",
+        "active": true,
+        "intent": "commit",
+        "shock": 0,
+        "impairment": 0,
+        "disruption": 0,
+        "recoveryTicks": 0,
+        "neutralized": false,
+        "fear": 0,
+        "moraleState": "steady",
+        "escaped": false,
+        "awareness": 0.525,
+        "memoryActorIds": [
+          "aggressor"
+        ],
+        "memoryAges": {
+          "aggressor": 0
+        },
+        "toolReady": 0,
+        "toolAvailable": false,
+        "engagementHeadroom": 1
+      }
+    ],
+    "terminalReason": "side-neutralized-threat"
+  },
+  "finalChecksum": "498e2821f8d0c99926e7fbc556757a6333145151b655397c21b45ada6c46103d"
+}

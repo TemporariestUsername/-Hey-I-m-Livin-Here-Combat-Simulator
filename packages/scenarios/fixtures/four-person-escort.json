@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.3.0",
+  "id": "four-person-escort",
+  "name": "Four-person escort and scattered pressure",
+  "seed": 606,
+  "pulseMs": 100,
+  "maxTicks": 20,
+  "map": {
+    "width": 18,
+    "height": 12,
+    "obstacles": [
+      { "id": "north-divider", "x": 7, "y": 0, "width": 0.7, "height": 4, "blocksVision": true, "blocksMovement": true },
+      { "id": "south-divider", "x": 7, "y": 8, "width": 0.7, "height": 4, "blocksVision": true, "blocksMovement": true }
+    ],
+    "exits": [{ "id": "west-safe-zone", "x": 0, "y": 4, "width": 1.5, "height": 4 }]
+  },
+  "threat": { "active": true, "endsAtTick": 16 },
+  "rules": {
+    "physics": { "enabled": true, "neutralizationThreshold": 0.97 },
+    "morale": { "enabled": true, "shockRadiusM": 7, "cascadeDepth": 2, "perPulseCap": 0.4 }
+  },
+  "squads": [{ "id": "escort", "side": "blue", "leaderId": "escort-lead", "initialCohesion": 0.9 }],
+  "objectives": [{ "id": "escort-protected", "kind": "protect-side", "side": "blue" }],
+  "terminalConditions": [{ "kind": "objective-complete", "objectiveId": "escort-protected" }, { "kind": "threat-ended" }],
+  "actors": [
+    { "id": "escort-lead", "side": "blue", "squadId": "escort", "leader": true, "position": { "x": 5, "y": 6 }, "facingDegrees": 0, "visionRange": 10, "visionArcDegrees": 220, "movementSpeed": 2.2, "massKg": 82, "radiusM": 0.25, "skill": 0.75, "balance": 0.9, "guard": 0.75, "mobility": 0.9, "surprise": 0.4, "reachM": 0.75, "protection": 0.15, "stance": "mobile", "readiness": 0.8, "stamina": 1, "resolve": 0.85, "threatened": true, "policyId": "chen-inspired" },
+    { "id": "escort-north", "side": "blue", "squadId": "escort", "position": { "x": 4.4, "y": 5.1 }, "facingDegrees": 330, "visionRange": 9, "visionArcDegrees": 180, "movementSpeed": 2.1, "massKg": 76, "radiusM": 0.25, "skill": 0.65, "balance": 0.85, "guard": 0.75, "mobility": 0.85, "surprise": 0.2, "reachM": 0.7, "protection": 0.1, "stance": "guarded", "readiness": 0.7, "stamina": 1, "resolve": 0.75, "threatened": true, "policyId": "safety-first" },
+    { "id": "escort-south", "side": "blue", "squadId": "escort", "position": { "x": 4.4, "y": 6.9 }, "facingDegrees": 30, "visionRange": 9, "visionArcDegrees": 180, "movementSpeed": 2.1, "massKg": 75, "radiusM": 0.25, "skill": 0.65, "balance": 0.85, "guard": 0.75, "mobility": 0.85, "surprise": 0.2, "reachM": 0.7, "protection": 0.1, "stance": "guarded", "readiness": 0.7, "stamina": 1, "resolve": 0.75, "threatened": true, "policyId": "safety-first" },
+    { "id": "protected-member", "side": "blue", "squadId": "escort", "position": { "x": 3.7, "y": 6 }, "facingDegrees": 180, "visionRange": 7, "visionArcDegrees": 160, "movementSpeed": 1.8, "massKg": 68, "radiusM": 0.25, "skill": 0.35, "balance": 0.8, "guard": 0.55, "mobility": 0.8, "surprise": 0.1, "reachM": 0.6, "protection": 0.2, "stance": "guarded", "readiness": 0.55, "stamina": 1, "resolve": 0.65, "threatened": true, "policyId": "safety-first" },
+    { "id": "amber-center", "side": "amber", "position": { "x": 5.9, "y": 6 }, "facingDegrees": 180, "visionRange": 10, "visionArcDegrees": 220, "movementSpeed": 2.2, "massKg": 84, "radiusM": 0.25, "skill": 0.7, "balance": 0.85, "guard": 0.6, "mobility": 0.9, "surprise": 0.3, "reachM": 0.75, "protection": 0.05, "stance": "mobile", "readiness": 0.75, "stamina": 1, "resolve": 0.7, "threatened": true, "policyId": "sportive" },
+    { "id": "amber-north", "side": "amber", "position": { "x": 8.4, "y": 3.8 }, "facingDegrees": 200, "visionRange": 10, "visionArcDegrees": 180, "movementSpeed": 2.2, "massKg": 78, "radiusM": 0.25, "skill": 0.6, "balance": 0.85, "guard": 0.6, "mobility": 0.9, "surprise": 0.35, "reachM": 0.7, "protection": 0.05, "stance": "mobile", "readiness": 0.68, "stamina": 1, "resolve": 0.6, "threatened": true, "policyId": "sportive" },
+    { "id": "amber-south", "side": "amber", "position": { "x": 8.5, "y": 8.2 }, "facingDegrees": 160, "visionRange": 10, "visionArcDegrees": 180, "movementSpeed": 2.2, "massKg": 77, "radiusM": 0.25, "skill": 0.6, "balance": 0.85, "guard": 0.6, "mobility": 0.9, "surprise": 0.35, "reachM": 0.7, "protection": 0.05, "stance": "mobile", "readiness": 0.68, "stamina": 1, "resolve": 0.6, "threatened": true, "policyId": "sportive" }
+  ]
+}

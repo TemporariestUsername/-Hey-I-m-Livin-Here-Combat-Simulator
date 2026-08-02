@@ -1,0 +1,758 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://living-here.example/schema/simulation-event-1.3.0.schema.json",
+  "title": "Living Here Simulation Event 1.3.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sequence",
+    "tick",
+    "type",
+    "payload",
+    "priorChecksum",
+    "checksum"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.3.0"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "enum": [
+        "simulation-started",
+        "threat-ended",
+        "observation-built",
+        "policy-decided",
+        "intent-gated",
+        "intent-resolved",
+        "movement-resolved",
+        "tempo-resolved",
+        "contact-resolved",
+        "effects-applied",
+        "recovery-applied",
+        "morale-signal",
+        "morale-updated",
+        "squad-updated",
+        "route-progress",
+        "objective-updated",
+        "terminal-reached",
+        "simulation-ended",
+        "environment-changed",
+        "action-resolved",
+        "tool-state-changed"
+      ]
+    },
+    "payload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scenarioId",
+            "seed"
+          ],
+          "properties": {
+            "scenarioId": {
+              "$ref": "#/$defs/id"
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "observerId",
+            "visibleActorIds",
+            "heardActorIds",
+            "rememberedActorIds",
+            "uncertainty",
+            "rngSamples"
+          ],
+          "properties": {
+            "observerId": {
+              "$ref": "#/$defs/id"
+            },
+            "visibleActorIds": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "heardActorIds": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "rememberedActorIds": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "uncertainty": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "rngSamples": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "policyId",
+            "policyVersion",
+            "selected",
+            "candidates",
+            "rationale",
+            "rngSamples"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "policyId": {
+              "$ref": "#/$defs/id"
+            },
+            "policyVersion": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "selected": {
+              "$ref": "#/$defs/action"
+            },
+            "candidates": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/policyCandidate"
+              }
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "rngSamples": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "proposed",
+            "selected",
+            "failedPredicate"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "proposed": {
+              "$ref": "#/$defs/action"
+            },
+            "selected": {
+              "$ref": "#/$defs/action"
+            },
+            "failedPredicate": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "failedPredicates": {
+              "type": "array",
+              "maxItems": 16,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "predicates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "selected",
+            "stamina"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "selected": {
+              "$ref": "#/$defs/action"
+            },
+            "stamina": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "from",
+            "to",
+            "blocked"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "from": {
+              "$ref": "#/$defs/point"
+            },
+            "to": {
+              "$ref": "#/$defs/point"
+            },
+            "blocked": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "targetId",
+            "tempo",
+            "terms",
+            "noise",
+            "interrupted"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "targetId": {
+              "$ref": "#/$defs/id"
+            },
+            "tempo": {
+              "type": "number"
+            },
+            "terms": {
+              "$ref": "#/$defs/numericMap"
+            },
+            "noise": {
+              "type": "number"
+            },
+            "interrupted": {
+              "type": "boolean"
+            },
+            "interruptedBy": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "packetId",
+            "sourceId",
+            "targetId",
+            "contactQuality",
+            "severity",
+            "impulseNs",
+            "terms",
+            "noise",
+            "disruption",
+            "impairment",
+            "shock",
+            "separationM",
+            "neutralization",
+            "disarm"
+          ],
+          "properties": {
+            "packetId": {
+              "$ref": "#/$defs/packetId"
+            },
+            "sourceId": {
+              "$ref": "#/$defs/id"
+            },
+            "targetId": {
+              "$ref": "#/$defs/id"
+            },
+            "contactQuality": {
+              "type": "number"
+            },
+            "severity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "impulseNs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "terms": {
+              "$ref": "#/$defs/numericMap"
+            },
+            "noise": {
+              "type": "number"
+            },
+            "disruption": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "impairment": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "shock": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "separationM": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "neutralization": {
+              "type": "boolean"
+            },
+            "disarm": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "targetId",
+            "packetIds",
+            "deltas",
+            "neutralized",
+            "from",
+            "to"
+          ],
+          "properties": {
+            "targetId": {
+              "$ref": "#/$defs/id"
+            },
+            "packetIds": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/$defs/packetId"
+              }
+            },
+            "deltas": {
+              "$ref": "#/$defs/numericMap"
+            },
+            "neutralized": {
+              "type": "boolean"
+            },
+            "from": {
+              "$ref": "#/$defs/point"
+            },
+            "to": {
+              "$ref": "#/$defs/point"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "changes"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "changes": {
+              "$ref": "#/$defs/numericMap"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceActorId",
+            "targetActorId",
+            "depth",
+            "amount",
+            "distanceM"
+          ],
+          "properties": {
+            "sourceActorId": {
+              "$ref": "#/$defs/id"
+            },
+            "targetActorId": {
+              "$ref": "#/$defs/id"
+            },
+            "depth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "amount": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "distanceM": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "fearBefore",
+            "fearAfter",
+            "stateBefore",
+            "stateAfter"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "fearBefore": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "fearAfter": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "stateBefore": {
+              "$ref": "#/$defs/moraleState"
+            },
+            "stateAfter": {
+              "$ref": "#/$defs/moraleState"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "squadId",
+            "cohesionBefore",
+            "cohesionAfter",
+            "routedCount"
+          ],
+          "properties": {
+            "squadId": {
+              "$ref": "#/$defs/id"
+            },
+            "cohesionBefore": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "cohesionAfter": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "routedCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "exitId",
+            "reachedExit",
+            "position"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "exitId": {
+              "$ref": "#/$defs/id"
+            },
+            "reachedExit": {
+              "type": "boolean"
+            },
+            "position": {
+              "$ref": "#/$defs/point"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "objectiveId",
+            "complete"
+          ],
+          "properties": {
+            "objectiveId": {
+              "$ref": "#/$defs/id"
+            },
+            "complete": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "eventId",
+            "ambientLight",
+            "ambientNoise",
+            "visibilityScale"
+          ],
+          "properties": {
+            "eventId": {
+              "$ref": "#/$defs/id"
+            },
+            "ambientLight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "ambientNoise": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "visibilityScale": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "action",
+            "targetId",
+            "changes"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "action": {
+              "$ref": "#/$defs/action"
+            },
+            "targetId": {
+              "$ref": "#/$defs/id"
+            },
+            "changes": {
+              "$ref": "#/$defs/numericMap"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actorId",
+            "toolAvailable",
+            "toolReady",
+            "reason"
+          ],
+          "properties": {
+            "actorId": {
+              "$ref": "#/$defs/id"
+            },
+            "toolAvailable": {
+              "type": "boolean"
+            },
+            "toolReady": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        }
+      ]
+    },
+    "priorChecksum": {
+      "$ref": "#/$defs/checksum"
+    },
+    "checksum": {
+      "$ref": "#/$defs/checksum"
+    }
+  },
+  "$defs": {
+    "checksum": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "packetId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "action": {
+      "enum": [
+        "observe",
+        "communicate",
+        "reposition",
+        "protect",
+        "withdraw",
+        "ready-tool",
+        "commit",
+        "aid-ally",
+        "rally",
+        "wait"
+      ]
+    },
+    "moraleState": {
+      "enum": [
+        "steady",
+        "shaken",
+        "frozen",
+        "routing",
+        "recovering"
+      ]
+    },
+    "numericMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000
+        }
+      }
+    },
+    "policyCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "eligible",
+        "score",
+        "contributions"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "eligible": {
+          "type": "boolean"
+        },
+        "score": {
+          "type": "number"
+        },
+        "contributions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

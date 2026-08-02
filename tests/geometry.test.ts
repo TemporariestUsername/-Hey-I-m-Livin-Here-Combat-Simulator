@@ -17,13 +17,9 @@ test("swept movement cannot tunnel through walls and remains in bounds", () => {
   assert.deepEqual(resolveMovement({ x: 2, y: 1 }, { x: -3, y: 12 }, { width: 10, height: 10 }), { x: 0, y: 10 });
 });
 
-test("persisted movement positions use the accepted six-decimal precision", () => {
-  assert.deepEqual(resolveMovement({ x: 1, y: 1 }, { x: 1 / 3, y: 2 / 3 }, { width: 10, height: 10 }), { x: 0.333333, y: 0.666667 });
-});
-
 test("observations enforce range, facing, occlusion, and stable ordering", () => {
   const scenario: ScenarioSpec = {
-    schemaVersion: "1.0.0", id: "sensing", name: "Sensing", seed: 1, pulseMs: 100, maxTicks: 1,
+    schemaVersion: "1.3.0", id: "sensing", name: "Sensing", seed: 1, pulseMs: 100, maxTicks: 1,
     map: { width: 10, height: 10, obstacles: [wall] }, threat: { active: true },
     actors: [
       { id: "observer", side: "a", position: { x: 2, y: 5 }, facingDegrees: 0, visionRange: 10, visionArcDegrees: 120, readiness: 1, stamina: 1, resolve: 1 },

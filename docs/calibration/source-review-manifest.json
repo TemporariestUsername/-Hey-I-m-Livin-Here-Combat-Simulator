@@ -15,13 +15,13 @@
     },
     {
       "path": "docs/calibration/report-0.6.md",
-      "bytes": 4844,
-      "sha256": "567f2ca60c5d446816f214579c0fa8b86e99af7f9821200a302021bf83dc8fc0"
+      "bytes": 4838,
+      "sha256": "173d099bf56b5a300410b77a8f6ecf2d447baf03f99547ac74aa0be203dae43d"
     },
     {
       "path": "docs/calibration/source-trait-review.md",
-      "bytes": 6309,
-      "sha256": "07df82221fa14ec83caae7bff173a3839f71fa818808db9a74c4a7dfd7909297"
+      "bytes": 6303,
+      "sha256": "d1d2e5802eb638933017ee459efd42d3ae0f0824c50369e0565ba785ee4e1d2b"
     },
     {
       "path": "docs/security/prohibited-content-policy.md",
